@@ -16,10 +16,7 @@ public class MyPanel extends JPanel {
 
     public MyPanel(){
 
-        JFrame frame = new JFrame("Simulatore");
-        //frame.setSize(frameWidth, frameHeight);
         this.setPreferredSize(new Dimension(frameWidth, frameHeight));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         for(int i=0; i<numPeople; i++){
             people.add(new Person());
@@ -30,12 +27,6 @@ public class MyPanel extends JPanel {
         Timer t = new Timer(16, actLis);
         t.restart();
 
-
-
-        frame.add(this);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
     }
 
 
@@ -68,14 +59,6 @@ public class MyPanel extends JPanel {
         }*/
     }
 
-
-
-
-
-
-    public static void main(String[] args) {
-        MyPanel P = new MyPanel();
-    }
 
 
 
