@@ -1,18 +1,24 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class MyPanel extends JPanel {
 
     static int frameWidth = 900, frameHeight = 650;
-    int time = 0;
+    int refreshRate = 10;   //in milliseconds
+    int time = 0;           //tempo reale (milliseconds)
+    int dayValue = 500;     //quanto vale un giorno (milliseconds)
+    int numDays = 0;        //conteggio giorni
     int numPeople = 100;
 
     ArrayList<Person> people = new ArrayList<Person>();
     ArrayList<Point> points = new ArrayList<Point>();
 
+    int dayCycle = 0;   //inizializzato per ciclare un giorno
     ActionListener actLis;
+    Timer timer;
 
     public MyPanel(){
 
@@ -23,9 +29,9 @@ public class MyPanel extends JPanel {
         }
 
         //Timer for animation
-        actLis = e -> repaint(); //action listener
-        Timer t = new Timer(16, actLis);
-        t.restart();
+        actLis = e -> repaint();
+        timer = new Timer(refreshRate, actLis);
+        timer.start();
 
     }
 
@@ -33,9 +39,24 @@ public class MyPanel extends JPanel {
 
 
     public void paint(Graphics g){
-        time +=16;
 
-        points.add(new Point(time/16, Person.numInfected));//track of infected people
+
+        time +=refreshRate;
+        if(dayCycle == dayValue){
+            dayCycle = 0;
+            numDays++;
+            System.out.println(numDays);
+        }else{
+            dayCycle += refreshRate;
+        }
+
+        if(numDays == 50){
+            timer.stop();
+        }
+
+
+
+        //points.add(new Point(numDays, Person.numInfected));//track of infected people
 
         //repaint "previous frame"
         super.paintComponent(g);

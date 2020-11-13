@@ -4,8 +4,10 @@ public class Person {
     int ovalDim = 10;
     int x,y;
     int vx, vy;
-    int status = 0;
-    int recoveryTime = 50 *1000; //in milliseconds
+    int type = 0;   // colore
+    int status = 1;     //movimento si/no
+    int meetings = 0;    //numero medio di incontri di ciascun individuo in un giorno, assumendo che tutti siano in movimento
+    int recoveryTime = 5 *1000; //in milliseconds
     static int numInfected = 0;
 
 
@@ -19,7 +21,7 @@ public class Person {
 
         //infected at start
         if (Math.random()<0.05){    //make 5% of the people infected at start
-            status = 1;
+            type = 1;
             numInfected++;
         }
 
@@ -40,7 +42,7 @@ public class Person {
 
     public void paint(Graphics g){
         //set the color of the Person object based on the health status
-        switch(status) {
+        switch(type) {
             case 0: //normal
                 g.setColor(Color.LIGHT_GRAY);
                 break;
@@ -51,14 +53,14 @@ public class Person {
                 g.setColor(Color.blue);
         }
 
-        if(status == 1){
+        if(type == 1){
 
             //recoveryTime update
             recoveryTime -=16;
 
             //Person recovered
             if (recoveryTime<= 0){
-                status = 2;
+                type = 2;
                 numInfected--;
             }
         }
@@ -91,11 +93,11 @@ public class Person {
 
         //collision check
         if(r1.intersects(r2)){
-            if(this.status == 1 && p.status == 0){
-                p.status = 1;
+            if(this.type == 1 && p.type == 0){
+                p.type = 1;
                 numInfected++;
-            }else if(this.status == 0 && p.status == 1){
-                this.status = 1;
+            }else if(this.type == 0 && p.type == 1){
+                this.type = 1;
                 numInfected++;
             }
         }
