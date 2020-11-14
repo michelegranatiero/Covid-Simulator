@@ -46,6 +46,9 @@ public class MyPanel extends JPanel {
             dayCycle = 0;
             numDays++;
             System.out.println(numDays);
+
+            //for(Person p: people){} //codice per aumentare/diminuire risorse (escludere persone morte)
+
         }else{
             dayCycle += refreshRate;
         }

@@ -1,14 +1,18 @@
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Person {
     int ovalDim = 10;
     int x,y;
     int vx, vy;
-    int type = 0;   // colore
+    String type;   // colore
     int status = 1;     //movimento si/no
-    int meetings = 0;    //numero medio di incontri di ciascun individuo in un giorno, assumendo che tutti siano in movimento
+    ArrayList<Person> meetings= new ArrayList<>();    //incontri di ciascun individuo in un giorno
     int recoveryTime = 5 *1000; //in milliseconds
+
     static int numInfected = 0;
+
+    //aspetti sanitari
 
 
 
@@ -21,12 +25,12 @@ public class Person {
 
         //infected at start
         if (Math.random()<0.05){    //make 5% of the people infected at start
-            type = 1;
+            type = "yellow";
             numInfected++;
         }
 
         //people that can move
-        if (Math.random() < 1){    //everybody
+        if (status == 1){    //everybody
             vx = (int)(Math.random()*(10+1)+-5);
             vy = (int)(Math.random()*(10+1)+-5);
         }
@@ -43,24 +47,24 @@ public class Person {
     public void paint(Graphics g){
         //set the color of the Person object based on the health status
         switch(type) {
-            case 0: //normal
-                g.setColor(Color.LIGHT_GRAY);
+            case "green": //normal
+                g.setColor(Color.green);
                 break;
-            case 1: //infected
-                g.setColor(Color.red);
+            case "yellow": //infected
+                g.setColor(Color.yellow);
                 break;
-            case 2: //recovered
+            case "blue": //recovered
                 g.setColor(Color.blue);
         }
 
-        if(type == 1){
+        if(type == "yellow"){
 
             //recoveryTime update
             recoveryTime -=16;
 
             //Person recovered
             if (recoveryTime<= 0){
-                type = 2;
+                type = "blue";
                 numInfected--;
             }
         }
@@ -93,14 +97,40 @@ public class Person {
 
         //collision check
         if(r1.intersects(r2)){
-            if(this.type == 1 && p.type == 0){
-                p.type = 1;
-                numInfected++;
-            }else if(this.type == 0 && p.type == 1){
-                this.type = 1;
-                numInfected++;
+            //add to meeting list
+            this.meetings.add(p);
+            p.meetings.add(this);
+
+            if(this.type == "green" && p.type == "yellow"){
+
+            }else if(this.type == "yellow" && p.type == "green"){
             }
         }
+    }
+
+    public void strategy1(){
+        switch (type){
+            case "green":
+
+                break;
+            case "yellow":
+
+                break;
+            case "red":
+
+                break;
+            case "blue":
+
+                break;
+            case "black":
+
+                break;
+
+        }
+    }
+
+    public void resetMeetings(){
+        meetings.clear();
     }
 
 
