@@ -31,8 +31,8 @@ public class Person {
 
         //people that can move
         if (movement){    //everybody
-            vx = (int)(Math.random()*(10+1)+-5);
-            vy = (int)(Math.random()*(10+1)+-5);
+            vx = (int)((Math.random()*5)+1)*(Math.random()<0.5?1:-1);
+            vy = (int)((Math.random()*5)+1)*(Math.random()<0.5?1:-1);
         }
 
         //randomize how long it takes to be recovered
