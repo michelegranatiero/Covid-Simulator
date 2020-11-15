@@ -1,5 +1,5 @@
 public class Point {
-    int time, value;
+    private int time, value;
 
     public Point(int t, int v){
         time = t;
