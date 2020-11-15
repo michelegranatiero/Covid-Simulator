@@ -3,7 +3,7 @@ import javax.swing.*;
 public class MyFrame extends JFrame {
 
     public MyFrame(){
-        super("Simulatore Contagi");
+        super("Simulatore Covid");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 

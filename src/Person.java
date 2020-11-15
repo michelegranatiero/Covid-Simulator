@@ -2,7 +2,9 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Person {
-    private int ovalDim = 10;
+    private int ovalDim = 13;
+    private Color myGreen= new Color(40, 114, 51);
+
     private int x,y;
     private int vx, vy;
     private String type = "green";   // colore
@@ -15,14 +17,6 @@ public class Person {
     private int recDays = 0;
 
     private ArrayList<Person> meetings= new ArrayList<>();    //incontri di ciascun individuo in un giorno
-    private int recoveryTime = 5 *1000; //in milliseconds
-
-    static int numInfected = 0;
-
-    //aspetti sanitari
-
-
-
 
 
     public Person(){
@@ -48,7 +42,7 @@ public class Person {
         //set the color of the Person object based on the health status
         switch(type) {
             case "green": //normal
-                g.setColor(Color.green);
+                g.setColor(myGreen);
                 break;
             case "yellow": //infected no symptoms
                 g.setColor(Color.orange);

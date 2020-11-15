@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class MyPanel extends JPanel {
 
-    static int frameWidth = 900, frameHeight = 650;
+    static int frameWidth = 1200, frameHeight = 750;
     private int refreshRate = 10;   //in milliseconds
     private int time = 0;           //tempo reale (milliseconds)
     private int dayValue = 500;     //quanto vale un giorno (milliseconds)
@@ -23,20 +23,19 @@ public class MyPanel extends JPanel {
     public MyPanel(){
 
         this.setPreferredSize(new Dimension(frameWidth, frameHeight));
+        this.setBackground(Color.gray);
 
         for(int i=0; i<numPeople; i++){
             people.add(new Person());
         }
         people.get(0).setYellow();
 
-        //Timer for animation
+        //Timer per animazione
         actLis = e -> repaint();
         timer = new Timer(refreshRate, actLis);
         timer.restart();
 
     }
-
-
 
 
     public void paint(Graphics g){
