@@ -10,7 +10,6 @@ public class MyPanel extends JPanel {
     private int time = 0;           //tempo reale (milliseconds)
     private int dayValue = 500;     //quanto vale un giorno (milliseconds)
     static int numDays = 0;        //conteggio giorni
-    private int numPeople = 100;
 
     private ArrayList<Person> people = new ArrayList<Person>();
     private ArrayList<Person> deaths = new ArrayList<>();
@@ -20,15 +19,16 @@ public class MyPanel extends JPanel {
     private ActionListener actLis;
     private Timer timer;
 
+
     public MyPanel(){
 
         this.setPreferredSize(new Dimension(frameWidth, frameHeight));
         this.setBackground(Color.gray);
 
-        for(int i=0; i<numPeople; i++){
+        for(int i=0; i<General.initPopulation; i++){
             people.add(new Person());
         }
-        people.get(0).setYellow();
+        people.get(0).setYellowFromGreen();
 
         //Timer per animazione
         actLis = e -> repaint();
@@ -45,7 +45,7 @@ public class MyPanel extends JPanel {
         if(dayCycle == dayValue){
             dayCycle = 0;
             numDays++;
-            System.out.println(numDays);
+            printExit();
 
             for(Person p: people){
                 if(p.getType().equals("red")){ // yellow to red maybe
@@ -61,7 +61,7 @@ public class MyPanel extends JPanel {
                 }
                 if(p.getType().equals("black")){ // yellow to red maybe
                     deaths.add(p);
-                    numPeople--;
+                    General.population--;
                 }
                 //p.resetMeetings(); //azzerare incontri (giornalieri)
             }
@@ -69,14 +69,33 @@ public class MyPanel extends JPanel {
                 people.remove(p);
             }
 
-            //for(Person p: people){} //codice per aumentare/diminuire risorse (escludere persone morte)
+            for(Person p: people){
+                General.resources--; //può essere ottimizzato
+                if(p.getMovement()){
+                    General.resources++;
+                }
+            }
+
+
+            //STOP CONDITIONS
+            if(Person.blacks>=General.initPopulation){
+                System.out.println("LA MALATTIA HA VINTO!");
+                printExit();
+                timer.stop();
+            }
+            if(General.resources <= 0){
+                System.out.println("COLLASSO! RISORSE TERMINATE!");
+                printExit();
+                timer.stop();
+            }
+            if((Person.blues>0 || Person.greens>0) && Person.yellows==0 && Person.reds==0){
+                System.out.println("MALATTIA DEBELLATA!");
+                printExit();
+                timer.stop();
+            }
 
         }else{
             dayCycle += refreshRate;
-        }
-
-        if(numDays == 100){
-            timer.stop();
         }
 
 
@@ -102,14 +121,21 @@ public class MyPanel extends JPanel {
         }
 
 
-
-
         /*
         //draw Graph points
         g.setColor(Color.BLACK);
         for(Point p: points){
             g.fillOval(p.time, 200-p.value, 5,5); //Graph "settings"
         }*/
+    }
+
+    public void printExit(){
+        System.out.println("Giorno: "+numDays+ "; Risorse: "+General.resources);
+        System.out.print("Sani: "+Person.greens);
+        System.out.print("; Asintomatici: "+Person.yellows);
+        System.out.print("; Sintomatici: "+Person.reds);
+        System.out.print("; Guariti: "+Person.blues);
+        System.out.println("; Morti: "+Person.blacks+"\n");
     }
 
 

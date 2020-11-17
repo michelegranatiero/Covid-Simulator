@@ -7,7 +7,7 @@ public class Person {
 
     private int x,y;
     private int vx, vy;
-    private String type = "green";   // colore
+    private String type;   // colore
     private boolean movement = true;     //movimento si/no
 
     private boolean incTimer = false;    //incubation timer on/off
@@ -16,21 +16,27 @@ public class Person {
     private boolean recTimer = false;    //recoverytimer on/off
     private int recDays = 0;
 
+    static int greens = 0;
+    static int yellows = 0;
+    static int reds = 0;
+    static int blues = 0;
+    static int blacks = 0;
+
+
     private ArrayList<Person> meetings= new ArrayList<>();    //incontri di ciascun individuo in un giorno
 
 
     public Person(){
+        this.setType("green");
+        greens++;
+
         x = (int)(Math.random()*(MyPanel.frameWidth - ovalDim));
         y = (int)(Math.random()*(MyPanel.frameHeight - ovalDim));
 
-        //people that can move
-        if (movement){    //everybody
-            vx = (int)((Math.random()*5)+1)*(Math.random()<0.5?1:-1);
-            vy = (int)((Math.random()*5)+1)*(Math.random()<0.5?1:-1);
-        }
+        //Movement
+        vx = (int)((Math.random()*4)+1)*(Math.random()<0.5?1:-1);
+        vy = (int)((Math.random()*4)+1)*(Math.random()<0.5?1:-1);
 
-        //randomize how long it takes to be recovered
-        //recoveryTime = (int)(Math.random()*(7000-5000+1)+5000); //5-7 seconds (in milliseconds)
     }
 
 
@@ -137,6 +143,10 @@ public class Person {
         this.type = s;
     }
 
+    public boolean getMovement(){
+        return this.movement;
+    }
+
     public void resetMeetings(){
         meetings.clear();
     }
@@ -149,8 +159,10 @@ public class Person {
         if(incTimer){
             if(incDays == General.incubationPeriod && this.type.equals("green")){
                 this.type = "yellow";
+                yellows++;
+                greens--;
                 incTimer = false;
-                //incDays = 0;
+                incDays = 0;
             }else{
                 incDays++;
             }
@@ -158,9 +170,13 @@ public class Person {
     }
 
     public void checkSymptomaticity(){
-        if(this.type.equals("yellow")){
+        if(this.type.equals("yellow") && incDays<General.symptomaticityPeriod){
+            incDays++;
             if(Math.random() < General.symptomaticity){
                 this.type = "red";
+                reds++;
+                yellows--;
+                this.movement = false;
             }
         }
     }
@@ -169,6 +185,8 @@ public class Person {
         if(this.type.equals("red")){
             if(Math.random() < General.lethality){
                 this.type = "black";
+                blacks++;
+                reds--;
                 this.movement = false;
             }
         }
@@ -177,19 +195,32 @@ public class Person {
     public void checkRecovery(){
         if(recTimer){
             if (recDays == General.recoveryTime && (this.type.equals("red") || this.type.equals("yellow"))) {
+                if(this.type.equals("red")){
+                    reds--;
+                }
+                if(this.type.equals("yellow")){
+                    yellows--;
+                }
                 this.type = "blue";
+                blues++;
+                this.movement = true;
                 recTimer = false;
                 //recDays = 0;
+
             } else {
                 recDays++;
             }
         }
     }
 
-    public void setYellow(){
-        this.type = "yellow";
-        this.recTimer = true;
-        this.incTimer = true;
+    public void setYellowFromGreen(){
+        if(this.type.equals("green")){
+            this.type = "yellow";
+            greens--;
+            yellows++;
+            this.recTimer = true;
+            this.incTimer = true;
+        }
     }
 
 
