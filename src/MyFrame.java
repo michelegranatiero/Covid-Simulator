@@ -3,7 +3,8 @@ import java.awt.event.ActionListener;
 
 public class MyFrame extends JFrame {
 
-    static int refreshRate = 10;   //in milliseconds
+    static int refreshRate = 10;   //in millisecondi (usare multipli di 5)
+
     private ActionListener actLis;
     static Timer timer;
 
@@ -13,13 +14,16 @@ public class MyFrame extends JFrame {
         super("Simulatore Covid");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+        GraphPanel graph = new GraphPanel();
+        this.add(graph);
+
         MyPanel simulationPanel = new MyPanel();
         this.add(simulationPanel);
 
 
 
 
-        actLis = e -> repaintInvoker(simulationPanel);
+        actLis = e -> repaintInvoker(simulationPanel, graph);
         timer = new Timer(refreshRate, actLis);
         timer.start();
 
@@ -32,9 +36,9 @@ public class MyFrame extends JFrame {
         this.setVisible(true);
     }
 
-    public void repaintInvoker(JPanel p1){
+    public void repaintInvoker(JPanel p1, JPanel p2){
         p1.repaint();
-        //p2.repaint();
+        p2.repaint();
     }
 
 

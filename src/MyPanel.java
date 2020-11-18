@@ -8,15 +8,13 @@ public class MyPanel extends JPanel {
     static int frameWidth = 1200, frameHeight = 750;
     private int time = 0;           //tempo reale (milliseconds)
     private int dayValue = 500;     //quanto vale un giorno (milliseconds)
-    private int numDays = 0;        //conteggio giorni
+    static int numDays = 0;        //conteggio giorni
 
     private ArrayList<Person> people = new ArrayList<Person>();
     private ArrayList<Person> deaths = new ArrayList<>();
-    private ArrayList<Point> points = new ArrayList<Point>();
 
     private int dayCycle = 0;   //inizializzato per ciclare un giorno
-    //private ActionListener actLis;
-    //private Timer timer;
+
 
 
     public MyPanel(){
@@ -32,7 +30,6 @@ public class MyPanel extends JPanel {
 
     }
 
-    @Override
     public void paintComponent(Graphics g){
 
 
