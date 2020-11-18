@@ -6,18 +6,17 @@ import java.util.ArrayList;
 public class MyPanel extends JPanel {
 
     static int frameWidth = 1200, frameHeight = 750;
-    private int refreshRate = 10;   //in milliseconds
     private int time = 0;           //tempo reale (milliseconds)
     private int dayValue = 500;     //quanto vale un giorno (milliseconds)
-    static int numDays = 0;        //conteggio giorni
+    private int numDays = 0;        //conteggio giorni
 
     private ArrayList<Person> people = new ArrayList<Person>();
     private ArrayList<Person> deaths = new ArrayList<>();
     private ArrayList<Point> points = new ArrayList<Point>();
 
     private int dayCycle = 0;   //inizializzato per ciclare un giorno
-    private ActionListener actLis;
-    private Timer timer;
+    //private ActionListener actLis;
+    //private Timer timer;
 
 
     public MyPanel(){
@@ -28,20 +27,16 @@ public class MyPanel extends JPanel {
         for(int i=0; i<General.initPopulation; i++){
             people.add(new Person());
         }
-        people.get(0).setYellowFromGreen();
 
-        //Timer per animazione
-        actLis = e -> repaint();
-        timer = new Timer(refreshRate, actLis);
-        timer.restart();
+        people.get(0).setYellowFromGreen();
 
     }
 
+    @Override
+    public void paintComponent(Graphics g){
 
-    public void paint(Graphics g){
 
-
-        time +=refreshRate;
+        time +=MyFrame.refreshRate;
         if(dayCycle == dayValue){
             dayCycle = 0;
             numDays++;
@@ -81,26 +76,38 @@ public class MyPanel extends JPanel {
             if(Person.blacks>=General.initPopulation){
                 System.out.println("LA MALATTIA HA VINTO!");
                 printExit();
-                timer.stop();
+                MyFrame.timer.stop();
             }
             if(General.resources <= 0){
                 System.out.println("COLLASSO! RISORSE TERMINATE!");
                 printExit();
-                timer.stop();
+                MyFrame.timer.stop();
             }
             if((Person.blues>0 || Person.greens>0) && Person.yellows==0 && Person.reds==0){
-                System.out.println("MALATTIA DEBELLATA!");
-                printExit();
-                timer.stop();
+                boolean end = true;
+                for(Person p: people){
+                    if(p.getType().equals("green") && p.isIncTimer()){
+                        end = false;
+                        break;
+                    }
+                }
+                if(end){
+                    System.out.println("MALATTIA DEBELLATA!");
+                    printExit();
+                    MyFrame.timer.stop();
+                }
             }
 
         }else{
-            dayCycle += refreshRate;
+            dayCycle += MyFrame.refreshRate;
         }
 
-
-
-        //points.add(new Point(numDays, Person.numInfected));//track of infected people
+        //check Collision
+        for(int i = 0; i<people.size(); i++){
+            for(int j = i+1; j<people.size(); j++){
+                people.get(i).collision(people.get(j));
+            }
+        }
 
         //repaint "previous frame"
         super.paintComponent(g);
@@ -113,20 +120,14 @@ public class MyPanel extends JPanel {
             p.paint(g);
         }
 
-        //check Collision
-        for(int i = 0; i<people.size(); i++){
-            for(int j = i+1; j<people.size(); j++){
-                people.get(i).collision(people.get(j));
-            }
-        }
-
-
         /*
+        points.add(new Point(numDays, Person.yellows));//track of infected people
         //draw Graph points
         g.setColor(Color.BLACK);
         for(Point p: points){
-            g.fillOval(p.time, 200-p.value, 5,5); //Graph "settings"
-        }*/
+            g.fillOval(p.getTime(), 200-p.getValue(), 5,5); //Graph "settings"
+        }
+         */
     }
 
     public void printExit(){

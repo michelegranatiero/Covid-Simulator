@@ -147,6 +147,10 @@ public class Person {
         return this.movement;
     }
 
+    public boolean isIncTimer() {
+        return incTimer;
+    }
+
     public void resetMeetings(){
         meetings.clear();
     }
