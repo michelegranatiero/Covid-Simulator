@@ -3,7 +3,9 @@ import java.util.ArrayList;
 
 public class Person {
     private int ovalDim = 13;
-    private Color myGreen= new Color(40, 114, 51);
+    static Color myGreen = new Color(0, 204, 51);
+    static Color myYellow = new Color(255, 153, 0);
+    static Color myRed = new Color(170,0,0);
 
     private int x,y;
     private int vx, vy;
@@ -51,10 +53,10 @@ public class Person {
                 g.setColor(myGreen);
                 break;
             case "yellow": //infected no symptoms
-                g.setColor(Color.orange);
+                g.setColor(myYellow);
                 break;
             case "red": //infected with symptoms
-                g.setColor(Color.red);
+                g.setColor(myRed);
                 break;
             case "blue": //recovered
                 g.setColor(Color.blue);

@@ -21,4 +21,7 @@ public class Point {
     public void setValue(int value) {
         this.value = value;
     }
+
+
+
 }

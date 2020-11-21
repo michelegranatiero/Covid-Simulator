@@ -1,51 +1,63 @@
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
 import java.awt.*;
-import java.awt.event.ActionListener;
+import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
 public class GraphPanel extends JPanel {
 
-    private ArrayList<Point> points = new ArrayList<Point>();
+    static ArrayList<Point> gPoints = new ArrayList<Point>();
+    static ArrayList<Point> yPoints = new ArrayList<Point>();
+    static ArrayList<Point> rPoints = new ArrayList<Point>();
+    static ArrayList<Point> bPoints = new ArrayList<Point>();
+    static ArrayList<Point> bkPoints = new ArrayList<Point>();
 
-    private int time = 0;           //tempo reale (milliseconds)
-    private int dayValue = 500;     //quanto vale un giorno (milliseconds)
-    private int dayCycle = 0;   //inizializzato per ciclare un giorno
+    private int panelWidth = MyPanel.frameWidth/2, panelHeight=110;
 
     public GraphPanel(){
 
         this.setBackground(Color.gray);
-        this.setPreferredSize(new Dimension(400, 600));
+        this.setPreferredSize(new Dimension(panelWidth, panelHeight ));
+        //this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+
 
     }
 
-    public void paintComponent(Graphics g){
+    @Override
+    public void paintComponent(Graphics g1){
 
-        /*
-        time +=MyFrame.refreshRate;
-        if(dayCycle == dayValue) {
-            dayCycle = 0;
+        super.paintComponent(g1);
 
-            points.add(new Point(MyPanel.numDays, Person.yellows));
-            g.setColor(Color.BLACK);
-            for(Point p: points) {
-                g.fillOval(p.getTime(), 200 - p.getValue(), 5, 5); //Graph "settings"
+        int graphWidth = MyPanel.numDays*10;
+
+        gPoints.add(new Point(graphWidth, Person.greens));
+        yPoints.add(new Point(graphWidth, Person.yellows));
+        rPoints.add(new Point(graphWidth, Person.reds));
+        bPoints.add(new Point(graphWidth, Person.blues));
+        bkPoints.add(new Point(graphWidth, Person.blacks));
+
+        drawCharts(g1, gPoints, Person.myGreen);
+        drawCharts(g1, yPoints, Person.myYellow);
+        drawCharts(g1, rPoints, Person.myRed);
+        drawCharts(g1, bPoints, Color.blue);
+        drawCharts(g1, bkPoints, Color.black);
+
+
+    }
+
+    public void drawCharts(Graphics g1, ArrayList<Point> a, Color c){
+        if(a.size()>2) {
+            for (int i = 1; i < a.size(); i++) {
+                Point p1 = a.get(i - 1);
+                Point p2 = a.get(i);
+                Graphics2D g2 = (Graphics2D) g1;
+                int strokeWidth = 4;
+                BasicStroke myStroke= new BasicStroke(strokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+                g2.setStroke(myStroke);
+                g2.setColor(c);
+                g2.draw(new Line2D.Float(p1.getTime(), panelHeight-strokeWidth-p1.getValue(), p2.getTime(), panelHeight-strokeWidth-p2.getValue()));
             }
-        }else{
-            dayCycle += MyFrame.refreshRate;
         }
-
-         */
-
-        super.paintComponent(g);
-
-        points.add(new Point(MyPanel.numDays, Person.yellows));//track of infected people
-        //draw Graph points
-        g.setColor(Color.BLACK);
-        for(Point p: points){
-            g.fillOval(p.getTime(), 200-p.getValue(), 5,5); //Graph "settings"
-        }
-
-
     }
 
 

@@ -1,11 +1,12 @@
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class MyPanel extends JPanel {
 
-    static int frameWidth = 1200, frameHeight = 750;
+    static int frameWidth = 1200, frameHeight = 600;
     private int time = 0;           //tempo reale (milliseconds)
     private int dayValue = 500;     //quanto vale un giorno (milliseconds)
     static int numDays = 0;        //conteggio giorni
@@ -21,6 +22,7 @@ public class MyPanel extends JPanel {
 
         this.setPreferredSize(new Dimension(frameWidth, frameHeight));
         this.setBackground(Color.gray);
+        this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 
         for(int i=0; i<General.initPopulation; i++){
             people.add(new Person());
@@ -30,6 +32,7 @@ public class MyPanel extends JPanel {
 
     }
 
+    @Override
     public void paintComponent(Graphics g){
 
 
@@ -66,6 +69,7 @@ public class MyPanel extends JPanel {
                 if(p.getMovement()){
                     General.resources++;
                 }
+
             }
 
 
