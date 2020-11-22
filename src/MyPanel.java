@@ -1,7 +1,6 @@
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class MyPanel extends JPanel {

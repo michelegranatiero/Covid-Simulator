@@ -12,7 +12,7 @@ public class GraphPanel extends JPanel {
     static ArrayList<Point> bPoints = new ArrayList<Point>();
     static ArrayList<Point> bkPoints = new ArrayList<Point>();
 
-    private int panelWidth = MyPanel.frameWidth/2, panelHeight=110;
+    private final int panelWidth = MyPanel.frameWidth/2, panelHeight=110;
 
     public GraphPanel(){
 

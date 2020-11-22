@@ -2,7 +2,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Person {
-    private int ovalDim = 13;
+    private final int ovalDim = 13;
     static Color myGreen = new Color(0, 204, 51);
     static Color myYellow = new Color(255, 153, 0);
     static Color myRed = new Color(170,0,0);
