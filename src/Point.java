@@ -6,6 +6,7 @@ public class Point {
         value = v;
     }
 
+
     public int getTime() {
         return time;
     }

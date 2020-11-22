@@ -9,7 +9,10 @@ public class MyPanel extends JPanel {
     static int frameWidth = 1200, frameHeight = 600;
     private int time = 0;           //tempo reale (milliseconds)
     private int dayValue = 500;     //quanto vale un giorno (milliseconds)
-    static int numDays = 0;        //conteggio giorni
+    static int numDays = 0;        //conteggio
+    private boolean end1 = false;
+    private boolean end2 = false;
+    private boolean end3 = false;
 
     private ArrayList<Person> people = new ArrayList<Person>();
     private ArrayList<Person> deaths = new ArrayList<>();
@@ -40,6 +43,42 @@ public class MyPanel extends JPanel {
         if(dayCycle == dayValue){
             dayCycle = 0;
             numDays++;
+
+            //STOP CONDITIONS
+
+            if(Person.blacks>=General.initPopulation){
+                if(end1){
+                    System.out.println("LA MALATTIA HA VINTO!");
+                    MyFrame.timer.stop();
+                }else{end1=true;}
+            }
+            if(General.resources <= 0){
+                if(end2){
+                    System.out.println("COLLASSO! RISORSE TERMINATE!");
+                    General.resources = 0;
+                    MyFrame.timer.stop();
+                }else{end2=true;}
+
+            }
+            if((Person.blues>0 || Person.greens>0) && Person.yellows==0 && Person.reds==0){
+                if(end3){
+                    System.out.println("MALATTIA DEBELLATA!");
+                    MyFrame.timer.stop();
+                }else{
+                    boolean end = true;
+                    for(Person p: people){
+                        if(p.getType().equals("green") && p.isIncTimer()){
+                            end = false;
+                            break;
+                        }
+                    }
+                    if(end){
+                        end3=true;
+                    }
+                }
+            }
+
+            //DO THE THINGS
             printExit();
 
             for(Person p: people){
@@ -69,35 +108,8 @@ public class MyPanel extends JPanel {
                 if(p.getMovement()){
                     General.resources++;
                 }
-
             }
 
-
-            //STOP CONDITIONS
-            if(Person.blacks>=General.initPopulation){
-                System.out.println("LA MALATTIA HA VINTO!");
-                printExit();
-                MyFrame.timer.stop();
-            }
-            if(General.resources <= 0){
-                System.out.println("COLLASSO! RISORSE TERMINATE!");
-                printExit();
-                MyFrame.timer.stop();
-            }
-            if((Person.blues>0 || Person.greens>0) && Person.yellows==0 && Person.reds==0){
-                boolean end = true;
-                for(Person p: people){
-                    if(p.getType().equals("green") && p.isIncTimer()){
-                        end = false;
-                        break;
-                    }
-                }
-                if(end){
-                    System.out.println("MALATTIA DEBELLATA!");
-                    printExit();
-                    MyFrame.timer.stop();
-                }
-            }
 
         }else{
             dayCycle += MyFrame.refreshRate;
@@ -132,12 +144,13 @@ public class MyPanel extends JPanel {
     }
 
     public void printExit(){
+
         System.out.println("Giorno: "+numDays+ "; Risorse: "+General.resources);
         System.out.print("Sani: "+Person.greens);
         System.out.print("; Asintomatici: "+Person.yellows);
         System.out.print("; Sintomatici: "+Person.reds);
         System.out.print("; Guariti: "+Person.blues);
-        System.out.println("; Morti: "+Person.blacks+"\n");
+        System.out.println("; Deceduti: "+Person.blacks+"\n");
     }
 
 

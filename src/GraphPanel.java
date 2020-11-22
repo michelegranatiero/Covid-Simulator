@@ -30,11 +30,13 @@ public class GraphPanel extends JPanel {
 
         int graphWidth = MyPanel.numDays*10;
 
-        gPoints.add(new Point(graphWidth, Person.greens));
-        yPoints.add(new Point(graphWidth, Person.yellows));
-        rPoints.add(new Point(graphWidth, Person.reds));
-        bPoints.add(new Point(graphWidth, Person.blues));
-        bkPoints.add(new Point(graphWidth, Person.blacks));
+        float c = General.initPopulation / (float)(panelHeight-10); //costante per mettere in scala il grafico
+
+        gPoints.add(new Point(graphWidth, Math.round(Person.greens/c)));
+        yPoints.add(new Point(graphWidth, Math.round(Person.yellows/c)));
+        rPoints.add(new Point(graphWidth, Math.round(Person.reds/c)));
+        bPoints.add(new Point(graphWidth, Math.round(Person.blues/c)));
+        bkPoints.add(new Point(graphWidth, Math.round(Person.blacks/c)));
 
         drawCharts(g1, gPoints, Person.myGreen);
         drawCharts(g1, yPoints, Person.myYellow);
