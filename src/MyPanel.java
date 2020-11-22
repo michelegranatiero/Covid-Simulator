@@ -23,7 +23,7 @@ public class MyPanel extends JPanel {
     public MyPanel(){
 
         this.setPreferredSize(new Dimension(frameWidth, frameHeight));
-        this.setBackground(Color.gray);
+        this.setBackground(MyFrame.backCol2);
         this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 
         for(int i=0; i<General.initPopulation; i++){
@@ -78,7 +78,8 @@ public class MyPanel extends JPanel {
             }
 
             //DO THE THINGS
-            printExit();
+
+            //printExit();
 
             for(Person p: people){
                 if(p.getType().equals("red")){ // yellow to red maybe

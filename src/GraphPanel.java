@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ public class GraphPanel extends JPanel {
 
     public GraphPanel(){
 
-        this.setBackground(Color.gray);
+        this.setBackground(MyFrame.backCol1);
         this.setPreferredSize(new Dimension(panelWidth, panelHeight ));
         //this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 
@@ -41,7 +40,7 @@ public class GraphPanel extends JPanel {
         drawCharts(g1, gPoints, Person.myGreen);
         drawCharts(g1, yPoints, Person.myYellow);
         drawCharts(g1, rPoints, Person.myRed);
-        drawCharts(g1, bPoints, Color.blue);
+        drawCharts(g1, bPoints, Person.myBlue);
         drawCharts(g1, bkPoints, Color.black);
 
 

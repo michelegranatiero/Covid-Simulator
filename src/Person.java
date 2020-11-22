@@ -3,9 +3,10 @@ import java.util.ArrayList;
 
 public class Person {
     private final int ovalDim = 13;
-    static Color myGreen = new Color(0, 204, 51);
+    static Color myGreen = new Color(0, 180, 51);
     static Color myYellow = new Color(255, 153, 0);
-    static Color myRed = new Color(170,0,0);
+    static Color myRed = new Color(140,0,0);
+    static Color myBlue = new Color(50,170,255);
 
     private int x,y;
     private int vx, vy;
@@ -36,8 +37,8 @@ public class Person {
         y = (int)(Math.random()*(MyPanel.frameHeight - ovalDim));
 
         //Movement
-        vx = (int)((Math.random()*4)+1)*(Math.random()<0.5?1:-1);
-        vy = (int)((Math.random()*4)+1)*(Math.random()<0.5?1:-1);
+        vx = (int)((Math.random()*2)+1)*(Math.random()<0.5?1:-1);
+        vy = (int)((Math.random()*2)+1)*(Math.random()<0.5?1:-1);
 
     }
 
@@ -59,7 +60,7 @@ public class Person {
                 g.setColor(myRed);
                 break;
             case "blue": //recovered
-                g.setColor(Color.blue);
+                g.setColor(myBlue);
                 break;
             case "black": //death
                 g.setColor(Color.black);

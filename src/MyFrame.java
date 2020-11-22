@@ -9,6 +9,9 @@ public class MyFrame extends JFrame {
 
     private ActionListener actLis;
     static Timer timer;
+    static Color backCol1 = new Color(100, 120, 160);
+    static Color backCol2 = new Color(20, 91, 156);
+
 
 
 
