@@ -13,13 +13,13 @@ public class GraphPanel extends JPanel {
 
     private final int panelWidth = MyPanel.frameWidth/2, panelHeight=110;
 
+    float c = General.initPopulation / (float)(panelHeight-10); //costante per mettere in scala il grafico
+
     public GraphPanel(){
 
         this.setBackground(MyFrame.backCol1);
         this.setPreferredSize(new Dimension(panelWidth, panelHeight ));
         //this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
-
-
     }
 
     @Override
@@ -27,9 +27,7 @@ public class GraphPanel extends JPanel {
 
         super.paintComponent(g1);
 
-        int graphWidth = MyPanel.numDays*10;
-
-        float c = General.initPopulation / (float)(panelHeight-10); //costante per mettere in scala il grafico
+        int graphWidth = MyPanel.numDays * panelWidth/100 - panelWidth/100; // 100 NUMERO MAX GIORNI CHE RIENTRANO NEL GRAFICO
 
         gPoints.add(new Point(graphWidth, Math.round(Person.greens/c)));
         yPoints.add(new Point(graphWidth, Math.round(Person.yellows/c)));
@@ -47,7 +45,7 @@ public class GraphPanel extends JPanel {
     }
 
     public void drawCharts(Graphics g1, ArrayList<Point> a, Color c){
-        if(a.size()>2) {
+        if(a.size()>1) {
             for (int i = 1; i < a.size(); i++) {
                 Point p1 = a.get(i - 1);
                 Point p2 = a.get(i);

@@ -1,6 +1,8 @@
 public class General {
     static int initPopulation = 200;
     static int population = initPopulation;  // numero di persone esistenti all'inizio della simulazione
+    static int speed = 3;
+    static int velocity = 5;
     static int swabCost = 1;    //costo tampone
     static int careCost = 3*swabCost;    //costo giornaliero cure mediche per i malati (rossi)
 
@@ -15,4 +17,6 @@ public class General {
     static int symptomaticityPeriod = recoveryTime/3; //giorni di incubazione prima che l'individuo infettato diventi contagioso (cioè cambi colore)
 
     static int resources = Math.min(10*initPopulation*careCost, initPopulation*recoveryTime) - 1;   //quantità risorse inizialmente disponibili
+
+    //static double r0 = vd * recoveryTime * infectivity; //fattore di contagiosità R0
 }

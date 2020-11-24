@@ -37,8 +37,8 @@ public class Person {
         y = (int)(Math.random()*(MyPanel.frameHeight - ovalDim));
 
         //Movement
-        vx = (int)((Math.random()*2)+1)*(Math.random()<0.5?1:-1);
-        vy = (int)((Math.random()*2)+1)*(Math.random()<0.5?1:-1);
+        vx = (int)((Math.random()*General.speed)+1)*(Math.random()<0.5?1:-1);
+        vy = (int)((Math.random()*General.speed)+1)*(Math.random()<0.5?1:-1);
 
     }
 
@@ -88,9 +88,6 @@ public class Person {
 
 
 
-
-
-
     public void collision(Person p){
 
         //Represent Person as Rectangle for simple collision detection
@@ -117,26 +114,6 @@ public class Person {
         }
     }
 
-    public void strategy1(){
-        switch (type){
-            case "green":
-
-                break;
-            case "yellow":
-
-                break;
-            case "red":
-
-                break;
-            case "blue":
-
-                break;
-            case "black":
-
-                break;
-
-        }
-    }
 
     public String getType(){
         return this.type;

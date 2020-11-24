@@ -18,6 +18,9 @@ public class StatsPanel extends JPanel {
         this.setLayout((new BorderLayout()));
         this.setBackground(MyFrame.backCol1);
 
+        colors = new Color[]{Person.myGreen, Person.myYellow, Person.myRed, Person.myBlue, Color.black};
+        labels = new JLabel[]{g, y, r, bl, bk};
+
         //CENTERPANEL
         JPanel cenPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 40));
         cenPanel.setPreferredSize(new Dimension(MyPanel.frameWidth/10, 110));
@@ -28,15 +31,12 @@ public class StatsPanel extends JPanel {
         cl.setForeground(Color.white);
 
         //LEFTPANEL
-        JPanel rightPanel = new JPanel();
-        this.add(rightPanel, BorderLayout.WEST);
-        rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
-        rightPanel.setPreferredSize(new Dimension(MyPanel.frameWidth/10, 110));
-        rightPanel.setBackground(MyFrame.backCol1);
-        rightPanel.setAlignmentX(RIGHT_ALIGNMENT);
-
-        colors = new Color[]{Person.myGreen, Person.myYellow, Person.myRed, Person.myBlue, Color.black};
-        labels = new JLabel[]{g, y, r, bl, bk};
+        JPanel leftPanel = new JPanel();
+        this.add(leftPanel, BorderLayout.WEST);
+        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+        leftPanel.setPreferredSize(new Dimension(MyPanel.frameWidth/10, 110));
+        leftPanel.setBackground(MyFrame.backCol1);
+        leftPanel.setAlignmentX(RIGHT_ALIGNMENT);
 
         int i = 0;
         for(JLabel l: labels){
@@ -44,19 +44,16 @@ public class StatsPanel extends JPanel {
             p.setPreferredSize(new Dimension(MyPanel.frameWidth/10, 110/5));
             p.setBackground(MyFrame.backCol1);
             p.add(l);
-            rightPanel.add(p);
+            leftPanel.add(p);
             l.setForeground(colors[i]);
             i++;
             l.setFont(new Font("Segoe UI", Font.BOLD, 14));
-            //l.setHorizontalAlignment(FlowLayout.RIGHT);
-            //font, dimensione...
         }
 
     }
 
     public void updateLabels(){
         //CENTERPANEL
-
         cl.setText("Giorno: "+MyPanel.numDays+ "            Risorse: "+General.resources);
 
         //LEFTPANEL
