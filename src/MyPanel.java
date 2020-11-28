@@ -54,18 +54,16 @@ public class MyPanel extends JPanel {
                     General.resources++;
                 }
                 //change of "state"/color
-                if(p.getType().equals("red")){  // red to black maybe
-                    p.checkRecovery();
+                if(p.getType().equals("red")){  // red to black/blue maybe
                     p.checkLethality();
                 }
-                if(p.getType().equals("yellow")){   // yellow to red maybe
-                    p.checkRecovery();
+                if(p.getType().equals("yellow")){   // yellow to red/blue maybe
                     p.checkSymptomaticity();
                 }
                 if(p.getType().equals("green")){    // green to yellow
                     p.checkInfectivity();
                 }
-                if(p.getType().equals("black")){    // yellow to red maybe
+                if(p.getType().equals("black")){    // black
                     deaths.add(p);
                     General.population--;
                 }

@@ -2,7 +2,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Person {
-    private final int ovalDim = 13;
+    private final int ovalDim = 14;
     static Color myGreen = new Color(0, 180, 51);
     static Color myYellow = new Color(255, 153, 0);
     static Color myRed = new Color(140,0,0);
@@ -15,9 +15,11 @@ public class Person {
 
     private boolean incTimer = false;    //incubation timer on/off
     private int incDays = 0;
+    private int theDay;                 //chosen day for checkSymptomaticity
+    private int theDay2;                 //chosen day for checkLethality
 
-    private boolean recTimer = false;    //recoverytimer on/off
-    private int recDays = 0;
+    //private boolean recTimer = false;    //recoverytimer on/off
+    //private int recDays = 0;
 
     static int greens = 0;
     static int yellows = 0;
@@ -37,8 +39,8 @@ public class Person {
         y = (int)(Math.random()*(MyPanel.frameHeight - ovalDim));
 
         //Movement
-        vx = (int)((Math.random()*General.speed)+1)*(Math.random()<0.5?1:-1);
-        vy = (int)((Math.random()*General.speed)+1)*(Math.random()<0.5?1:-1);
+        vx = (int)(Math.random()*General.speed + 1)*(Math.random()<0.5?1:-1);
+        vy = (int)(Math.random()*General.speed + 1)*(Math.random()<0.5?1:-1);
 
     }
 
@@ -103,12 +105,12 @@ public class Person {
             if(this.type.equals("green") && (p.type.equals("yellow") || p.type.equals("red"))){
                 if(Math.random() < General.infectivity){
                     this.incTimer = true;
-                    this.recTimer = true;
+                    //this.recTimer = true;
                 }
             }else if((this.type.equals("yellow") || this.type.equals("red")) && p.type.equals("green")){
                 if(Math.random() < General.infectivity){
                     p.incTimer = true;
-                    p.recTimer = true;
+                    //p.recTimer = true;
                 }
             }
         }
@@ -140,14 +142,14 @@ public class Person {
     }
 
     public void checkInfectivity(){
-        if(incTimer){
-            if(incDays == General.incubationPeriod && this.type.equals("green")){
+        if(incTimer && this.type.equals("green")){
+            if(incDays == General.incubationPeriod){
                 this.type = "yellow";
                 yellows++;
                 greens--;
                 incTimer = false;
                 incDays = 0;
-
+                checkSymptomaticity();
             }else{
                 incDays++;
             }
@@ -155,55 +157,69 @@ public class Person {
     }
 
     public void checkSymptomaticity(){
-        if(this.type.equals("yellow") && incDays<General.symptomaticityPeriod){
-            incDays++;
-            if(Math.random() < General.symptomaticity){
-                this.type = "red";
-                reds++;
-                yellows--;
-                this.movement = false;
-            }
+        if(this.type.equals("yellow")){
+           if(incDays == 0){
+               if(Math.random() < General.symptomaticity){
+                   incTimer = true;
+                   theDay = (int)(Math.random()*General.symptomaticityPeriod + 1);
+               }else{
+                   theDay = General.recoveryTime + 1;
+               }
+           }else if(incTimer && theDay==incDays){
+               this.type = "red";
+               incTimer = false;
+               reds++;
+               yellows--;
+               this.movement = false;
+               checkLethality();
+               incDays--;
+           }else if(!incTimer && theDay==incDays){
+               this.type = "blue";
+               yellows--;
+               this.checkRecovery();
+           }
+           incDays++;
         }
     }
 
     public void checkLethality(){
         if(this.type.equals("red")){
-            if(Math.random() < General.lethality){
+            if(incDays == theDay){
+                if(Math.random() < General.lethality) {
+                    incTimer = true;
+                    theDay2 = incDays + (int)(Math.random()*(General.recoveryTime-incDays) + 1);
+                }else{
+                    theDay2 = General.recoveryTime + 1;
+                }
+            }else if(incTimer && theDay2 == incDays){
                 this.type = "black";
+                incTimer = false;
                 blacks++;
                 reds--;
                 this.movement = false;
+            }else if(!incTimer && theDay2 == incDays) {
+                this.type = "blue";
+                reds--;
+                this.checkRecovery();
+                incDays--;
             }
+            System.out.println(theDay2 + " " + incDays);
+            incDays++;
+
         }
     }
 
-    public void checkRecovery(){
-        if(recTimer){
-            if (recDays == General.recoveryTime && (this.type.equals("red") || this.type.equals("yellow"))) {
-                if(this.type.equals("red")){
-                    reds--;
-                }
-                if(this.type.equals("yellow")){
-                    yellows--;
-                }
-                this.type = "blue";
+    private void checkRecovery(){
+        if(this.type.equals("blue")){
                 blues++;
                 this.movement = true;
-                recTimer = false;
+                //recTimer = false;
                 //recDays = 0;
-
-            } else {
-                recDays++;
-            }
         }
     }
 
     public void setYellowFromGreen(){
         if(this.type.equals("green")){
-            this.type = "yellow";
-            greens--;
-            yellows++;
-            this.recTimer = true;
             this.incTimer = true;
         }
     }

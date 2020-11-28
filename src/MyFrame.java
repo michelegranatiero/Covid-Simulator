@@ -54,9 +54,7 @@ public class MyFrame extends JFrame {
         JPanel botPanel = new JPanel();
         card2.add(botPanel);
         botPanel.setBackground(backCol2);
-        JButton stopButton = new JButton("STOP");
-        stopButton.setBackground(backCol1);
-        stopButton.setForeground(Color.white);
+        MyButton stopButton = new MyButton("STOP");
         botPanel.add(stopButton);
 
 
