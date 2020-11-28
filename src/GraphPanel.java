@@ -11,14 +11,15 @@ public class GraphPanel extends JPanel {
     static ArrayList<Point> bPoints = new ArrayList<Point>();
     static ArrayList<Point> bkPoints = new ArrayList<Point>();
 
-    private final int panelWidth = MyPanel.frameWidth/2, panelHeight=110;
+    static int topPanelHeight = 100;
+    private final int panelWidth = MyPanel.frameWidth/2;
 
-    float c = General.initPopulation / (float)(panelHeight-10); //costante per mettere in scala il grafico
+    float c = General.initPopulation / (float)(topPanelHeight -10); //costante per mettere in scala il grafico
 
     public GraphPanel(){
 
         this.setBackground(MyFrame.backCol1);
-        this.setPreferredSize(new Dimension(panelWidth, panelHeight ));
+        this.setPreferredSize(new Dimension(panelWidth, topPanelHeight));
         //this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
     }
 
@@ -27,7 +28,7 @@ public class GraphPanel extends JPanel {
 
         super.paintComponent(g1);
 
-        int graphWidth = MyPanel.numDays * panelWidth/100 - panelWidth/100; // 100 NUMERO MAX GIORNI CHE RIENTRANO NEL GRAFICO
+        int graphWidth = MyPanel.numDays * panelWidth /100 - panelWidth /100; // 100 NUMERO MAX GIORNI CHE RIENTRANO NEL GRAFICO
 
         gPoints.add(new Point(graphWidth, Math.round(Person.greens/c)));
         yPoints.add(new Point(graphWidth, Math.round(Person.yellows/c)));
@@ -54,7 +55,7 @@ public class GraphPanel extends JPanel {
                 BasicStroke myStroke= new BasicStroke(strokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
                 g2.setStroke(myStroke);
                 g2.setColor(c);
-                g2.draw(new Line2D.Float(p1.getTime(), panelHeight-strokeWidth-p1.getValue(), p2.getTime(), panelHeight-strokeWidth-p2.getValue()));
+                g2.draw(new Line2D.Float(p1.getTime(), topPanelHeight -strokeWidth-p1.getValue(), p2.getTime(), topPanelHeight -strokeWidth-p2.getValue()));
             }
         }
     }

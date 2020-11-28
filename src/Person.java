@@ -203,7 +203,6 @@ public class Person {
                 this.checkRecovery();
                 incDays--;
             }
-            System.out.println(theDay2 + " " + incDays);
             incDays++;
 
         }

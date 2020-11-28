@@ -11,7 +11,7 @@ public class General {
     static double symptomaticity = 0.4; //probabilità che un contagiato sviluppi sintomi
     static double lethality = 0.3;  //probabilità che un malato sintomatico muoia
 
-    static int recoveryTime = 6;    //numero giorni trascorsi tra contagio e guarigione, DURATA DEL VIRUS
+    static int recoveryTime = 14;    //numero giorni trascorsi tra contagio e guarigione, DURATA DEL VIRUS
 
     static int incubationPeriod = recoveryTime/6; //giorni di incubazione prima che l'individuo infettato diventi contagioso (diventa giallo)
     static int symptomaticityPeriod = recoveryTime/3; //periodo entro il quale si manifestano i sintomi (diventa rosso)

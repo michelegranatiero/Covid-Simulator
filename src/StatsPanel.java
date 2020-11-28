@@ -22,8 +22,8 @@ public class StatsPanel extends JPanel {
         labels = new JLabel[]{g, y, r, bl, bk};
 
         //CENTERPANEL
-        JPanel cenPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 40));
-        cenPanel.setPreferredSize(new Dimension(MyPanel.frameWidth/10, 110));
+        JPanel cenPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, GraphPanel.topPanelHeight/2 -12));
+        cenPanel.setPreferredSize(new Dimension(MyPanel.frameWidth/10, GraphPanel.topPanelHeight));
         cenPanel.setBackground(MyFrame.backCol1);
         this.add(cenPanel, BorderLayout.CENTER);
         cenPanel.add(cl);
@@ -34,14 +34,14 @@ public class StatsPanel extends JPanel {
         JPanel leftPanel = new JPanel();
         this.add(leftPanel, BorderLayout.WEST);
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-        leftPanel.setPreferredSize(new Dimension(MyPanel.frameWidth/10, 110));
+        leftPanel.setPreferredSize(new Dimension(MyPanel.frameWidth/10, GraphPanel.topPanelHeight));
         leftPanel.setBackground(MyFrame.backCol1);
         leftPanel.setAlignmentX(RIGHT_ALIGNMENT);
 
         int i = 0;
         for(JLabel l: labels){
             JPanel p = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 0));
-            p.setPreferredSize(new Dimension(MyPanel.frameWidth/10, 110/5));
+            p.setPreferredSize(new Dimension(MyPanel.frameWidth/10, GraphPanel.topPanelHeight/5));
             p.setBackground(MyFrame.backCol1);
             p.add(l);
             leftPanel.add(p);
