@@ -50,6 +50,17 @@ public class MyFrame extends JFrame {
         MyPanel simulationPanel = new MyPanel();
         card2.add(simulationPanel);
 
+        //botPanel in Card2
+        JPanel botPanel = new JPanel();
+        card2.add(botPanel);
+        botPanel.setBackground(backCol2);
+        JButton stopButton = new JButton("STOP");
+        stopButton.setBackground(backCol1);
+        stopButton.setForeground(Color.white);
+        botPanel.add(stopButton);
+
+
+
         //JButton startButton = new JButton("START");
         //simulationPanel.add(startButton); //a quale pannello?
         //startButton.addActionListener(e -> startButtonClick());

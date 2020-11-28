@@ -147,6 +147,7 @@ public class Person {
                 greens--;
                 incTimer = false;
                 incDays = 0;
+
             }else{
                 incDays++;
             }
