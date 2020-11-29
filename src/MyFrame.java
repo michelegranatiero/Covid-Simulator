@@ -11,6 +11,7 @@ public class MyFrame extends JFrame {
     static Color backCol2 = new Color(20, 91, 156);
     private final CardLayout cardLayout;
     private final JPanel cardsPanel;
+    MyButton stopButton;
 
 
     public MyFrame(){
@@ -54,14 +55,15 @@ public class MyFrame extends JFrame {
         JPanel botPanel = new JPanel();
         card2.add(botPanel);
         botPanel.setBackground(backCol2);
-        MyButton stopButton = new MyButton("STOP");
+        stopButton = new MyButton("STOP");
+        stopButton.setPreferredSize(new Dimension(88, 25));
         botPanel.add(stopButton);
 
 
 
         //JButton startButton = new JButton("START");
         //simulationPanel.add(startButton); //a quale pannello?
-        //startButton.addActionListener(e -> startButtonClick());
+        stopButton.addActionListener(e -> stopButtonClick());
 
 
         //Timer
@@ -84,9 +86,18 @@ public class MyFrame extends JFrame {
         p3.updateLabels();
     }
 
-    public void startButtonClick(){
-        cardLayout.show(cardsPanel,"2");
-        //avvia timer...
+    boolean isPlaying = true;
+    public void stopButtonClick(){
+        if(isPlaying){
+            timer.stop();
+            isPlaying = false;
+            stopButton.setText("RESUME");
+        }else{
+            timer.start();
+            isPlaying = true;
+            stopButton.setText("STOP");
+        }
+
     }
 
 
