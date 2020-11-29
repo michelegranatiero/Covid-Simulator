@@ -9,9 +9,9 @@ public class MyFrame extends JFrame {
     static Timer timer;
     static Color backCol1 = new Color(100, 120, 160);
     static Color backCol2 = new Color(20, 91, 156);
-    private final CardLayout cardLayout;
-    private final JPanel cardsPanel;
-    MyButton stopButton;
+    static CardLayout cardLayout;
+    static JPanel cardsPanel;
+    static MyButton stopButton;
 
 
     public MyFrame(){
@@ -78,6 +78,7 @@ public class MyFrame extends JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setVisible(true);
+
     }
 
     public void repaintInvoker(MyPanel p1, GraphPanel p2, StatsPanel p3){
@@ -97,8 +98,12 @@ public class MyFrame extends JFrame {
             isPlaying = true;
             stopButton.setText("STOP");
         }
-
     }
+
+    static void disabler(){
+        stopButton.setEnabled(false);
+    }
+
 
 
 
@@ -106,5 +111,6 @@ public class MyFrame extends JFrame {
 
     public static void main(String[] args) {
         MyFrame Frame = new MyFrame();
+
     }
 }

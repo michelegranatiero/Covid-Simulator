@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class MyPanel extends JPanel {
 
-    static int frameWidth = 1200, frameHeight = 600;
+    static int frameWidth = 1200, frameHeight = 550;
     static int numDays = 0;         //conteggio
     private int time = 0;           //tempo reale (milliseconds)
     //private int dayValue = 500;   //quanto vale un giorno (milliseconds)
@@ -107,6 +107,7 @@ public class MyPanel extends JPanel {
             if(end1){
                 System.out.println("LA MALATTIA HA VINTO!");
                 MyFrame.timer.stop();
+                MyFrame.disabler();
             }else{end1=true;}
         }
         if(General.resources <= 0){
@@ -114,6 +115,8 @@ public class MyPanel extends JPanel {
                 System.out.println("COLLASSO! RISORSE TERMINATE!");
                 General.resources = 0;
                 MyFrame.timer.stop();
+                MyFrame.disabler();
+
             }else{end2 = true;}
 
         }
@@ -121,6 +124,7 @@ public class MyPanel extends JPanel {
             if(end3){
                 System.out.println("MALATTIA DEBELLATA!");
                 MyFrame.timer.stop();
+                MyFrame.disabler();
             }else{
                 boolean end = true;
                 for(Person p: people){
