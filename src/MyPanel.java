@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class MyPanel extends JPanel {
 
-    static int frameWidth = 1200, frameHeight = 550;
+    static int frameWidth = 1277, frameHeight = 547;
     static int numDays = 0;         //conteggio
     private int time = 0;           //tempo reale (milliseconds)
     //private int dayValue = 500;   //quanto vale un giorno (milliseconds)
