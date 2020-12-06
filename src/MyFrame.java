@@ -24,7 +24,7 @@ public class MyFrame extends JFrame {
         setContentPane(cardsPanel);
 
         //Menù - Card1 Panel
-        Menu card1 = new Menu();
+        MenuPanel card1 = new MenuPanel();
         cardsPanel.add(card1, "1");
         this.setMinimumSize(new Dimension(600, 400));
 
@@ -32,7 +32,6 @@ public class MyFrame extends JFrame {
 
         this.pack();
         this.setLocationRelativeTo(null);
-        this.setResizable(false);
         this.setVisible(true);
 
 
@@ -87,6 +86,7 @@ public class MyFrame extends JFrame {
         JFrame f1 = (JFrame) SwingUtilities.getWindowAncestor(MyFrame.cardsPanel);
         f1.pack();
         f1.setLocationRelativeTo(null);
+        f1.setResizable(false);
         MyFrame.cardLayout.show(MyFrame.cardsPanel, "2");
         MyFrame.timer.start();
     }
