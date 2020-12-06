@@ -19,26 +19,40 @@ public class MyFrame extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         //container
-        cardsPanel = new JPanel();
-        setContentPane(cardsPanel);
         cardLayout = new CardLayout();
-        cardsPanel.setLayout(cardLayout);
+        cardsPanel = new JPanel(cardLayout);
+        setContentPane(cardsPanel);
 
         //Menù - Card1 Panel
         Menu card1 = new Menu();
         cardsPanel.add(card1, "1");
+        this.setMinimumSize(new Dimension(600, 400));
+
+        cardLayout.show(cardsPanel,"1");
+
+        this.pack();
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        this.setVisible(true);
+
+
+
+
+    }
+
+    static void card2Creator(){
 
         //Simulation - Card2 Panel
-        JPanel card2 = new JPanel();
+        JPanel card2 = new JPanel(new BorderLayout());
         cardsPanel.add(card2, "2");
-        card2.setLayout(new BoxLayout(card2, BoxLayout.Y_AXIS));
+        //card2.setLayout(new BoxLayout(card2, BoxLayout.Y_AXIS));
 
         //topContainer in Card2
         JPanel topContainer = new JPanel();
         topContainer.setLayout(new BoxLayout(topContainer, BoxLayout.X_AXIS));
         topContainer.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
         topContainer.setBackground(Color.gray);
-        card2.add(topContainer);
+        card2.add(topContainer, BorderLayout.NORTH);
 
         //Panels in top Container
         GraphPanel graph = new GraphPanel();
@@ -49,11 +63,11 @@ public class MyFrame extends JFrame {
 
         //simulationPanel in Card2
         MyPanel simulationPanel = new MyPanel();
-        card2.add(simulationPanel);
+        card2.add(simulationPanel, BorderLayout.CENTER);
 
         //botPanel in Card2
         JPanel botPanel = new JPanel();
-        card2.add(botPanel);
+        card2.add(botPanel, BorderLayout.SOUTH);
         botPanel.setBackground(backCol2);
         stopButton = new MyButton("STOP");
         stopButton.setPreferredSize(new Dimension(88, 25));
@@ -65,30 +79,28 @@ public class MyFrame extends JFrame {
         //simulationPanel.add(startButton); //a quale pannello?
         stopButton.addActionListener(e -> stopButtonClick());
 
-
         //Timer
-        ActionListener actLis = e -> repaintInvoker(simulationPanel, graph, stats);
+        ActionListener actLis = e -> updateInvoker(simulationPanel, graph, stats);
         timer = new Timer(refreshRate, actLis);
-        timer.start();
 
-        //Card shown at start
-        cardLayout.show(cardsPanel,"2");
 
-        this.pack();
-        this.setLocationRelativeTo(null);
-        this.setResizable(false);
-        this.setVisible(true);
-
+        JFrame f1 = (JFrame) SwingUtilities.getWindowAncestor(MyFrame.cardsPanel);
+        f1.pack();
+        f1.setLocationRelativeTo(null);
+        MyFrame.cardLayout.show(MyFrame.cardsPanel, "2");
+        MyFrame.timer.start();
     }
 
-    public void repaintInvoker(MyPanel p1, GraphPanel p2, StatsPanel p3){
+
+
+    public static void updateInvoker(MyPanel p1, GraphPanel p2, StatsPanel p3){
         p1.repaint();
         p2.repaint();
         p3.updateLabels();
     }
 
-    boolean isPlaying = true;
-    public void stopButtonClick(){
+    static boolean isPlaying = true;
+    public static void stopButtonClick(){
         if(isPlaying){
             timer.stop();
             isPlaying = false;
