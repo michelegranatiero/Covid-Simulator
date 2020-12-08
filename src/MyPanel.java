@@ -38,7 +38,7 @@ public class MyPanel extends JPanel {
 
         time +=MyFrame.refreshRate;
 
-        if(contIncontri==General.velocity){     // change possibility: if dayCycle=dayValue;
+        if(contIncontri>=General.velocity){     // change possibility: if dayCycle=dayValue;
             //dayCycle = 0;
             numDays++;
             contIncontri = 0;

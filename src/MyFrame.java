@@ -50,7 +50,7 @@ public class MyFrame extends JFrame {
         JPanel topContainer = new JPanel();
         topContainer.setLayout(new BoxLayout(topContainer, BoxLayout.X_AXIS));
         topContainer.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
-        topContainer.setBackground(Color.gray);
+        topContainer.setBackground(backCol1);
         card2.add(topContainer, BorderLayout.NORTH);
 
         //Panels in top Container

@@ -1,7 +1,7 @@
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicTextUI;
+import javax.swing.text.AbstractDocument;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class MenuPanel extends JPanel {
@@ -9,6 +9,7 @@ public class MenuPanel extends JPanel {
     GridBagConstraints c;
     ArrayList<JLabel> labelList;
     ArrayList<JTextField> textList;
+    ArrayList<JSlider> sliderList;
     static MyButton buttonClear;
     static MyButton buttonStart;
 
@@ -37,17 +38,18 @@ public class MenuPanel extends JPanel {
         add(labelTitle, c);
 
         labelList = new ArrayList<>();
-        String[] labTexts = {"Popolazione", "N° incontri giornalieri", "Infettività", "Sintomaticità", "Letalità", "Durata Virus", "Costo Tampone (risorse)", "***Risorse***"};
+        String[] labTexts = {"Popolazione", "N° incontri giornalieri", "Infettività", "Sintomaticità", "Letalità", "Durata Virus", "***Risorse***"};
         c.gridwidth=1;
         c.insets = new Insets(5,100,5,5);
-        genVerticalLabelsFromArray(labelList, labTexts, this);
+        genLabelsFromArray(labelList, labTexts, this);
+
 
         textList = new ArrayList<>();
         c.gridx=1;
-        c.gridy=0;
+        c.gridy=1;
         c.ipadx = 100;
         c.insets = new Insets(5,5,5,100);
-        genVerticalCustomTextFromArray(textList, this, labTexts.length);
+        genTextFields(textList, this, labTexts.length);
 
         buttonClear = new MyButton("Clear");
         c.ipadx=300;
@@ -62,6 +64,7 @@ public class MenuPanel extends JPanel {
         add(buttonStart, c);
 
 
+
         //ACTION LISTENERS
         buttonStart.addActionListener(e->MyFrame.card2Creator());   //START BUTTON
         buttonClear.addActionListener(e -> buttonClearClick(textList));
@@ -74,7 +77,7 @@ public class MenuPanel extends JPanel {
         }
     }
 
-    public void genVerticalLabelsFromArray(ArrayList<JLabel> a, String[] texts, JPanel panel){
+    public void genLabelsFromArray(ArrayList<JLabel> a, String[] texts, JPanel panel){
         for (String text : texts) {
             JLabel l = new JLabel(text);
             l.setFont(new Font("Segoe UI", Font.BOLD, 16));
@@ -86,17 +89,53 @@ public class MenuPanel extends JPanel {
         }
     }
 
-    public void genVerticalCustomTextFromArray(ArrayList<JTextField> a, JPanel panel, int iterations) {
+    public void genTextFields(ArrayList<JTextField> a, JPanel panel, int iterations) {
         for(int i = 0; i<iterations; i++ ){
             JTextField t = new JTextField();
+            ((AbstractDocument)t.getDocument()).setDocumentFilter(new NumberDocFilter());
+            theFilter(i, t);
             t.setFont(new Font("Segoe UI", Font.BOLD, 16));
             t.setHorizontalAlignment(SwingConstants.CENTER);
             t.setBorder(BorderFactory.createEtchedBorder(MyFrame.backCol2, MyFrame.backCol2));
             a.add(t);
-            c.gridy++;
             panel.add(t, c);
+            c.gridy++;
         }
     }
+
+
+
+    public void theFilter(int i, JTextField t){
+        switch (i){
+            case 0: //Popolazione
+                t.setText(General.population +"");
+                t.setCaretPosition(t.getText().length());
+
+                break;
+            case 1: // Numero Incontri Giornalieri (velocity)
+                t.setText(General.velocity+"");
+                t.setEnabled(false);
+                t.setBackground(MyFrame.backCol1);
+                break;
+            case 2:
+                t.setText((int)(General.symptomaticity*100)+"");
+                break;
+            case 3:
+                t.setText((int)(General.infectivity*100)+"");
+                break;
+            case 4:
+                t.setText((int)(General.lethality*100)+"");
+                break;
+            case 5:
+                t.setText(General.recoveryTime+"");
+            case 6: // Risorse
+                t.setEnabled(false);
+                t.setBackground(MyFrame.backCol1);
+                break;
+        }
+    }
+
+
 
 
 }
