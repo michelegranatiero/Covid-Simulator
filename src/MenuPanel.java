@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicTextUI;
 import javax.swing.text.AbstractDocument;
 import java.awt.*;
 import java.util.ArrayList;
@@ -9,7 +8,6 @@ public class MenuPanel extends JPanel {
     GridBagConstraints c;
     ArrayList<JLabel> labelList;
     ArrayList<JTextField> textList;
-    ArrayList<JSlider> sliderList;
     static MyButton buttonClear;
     static MyButton buttonStart;
 
