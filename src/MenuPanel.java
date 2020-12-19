@@ -127,6 +127,7 @@ public class MenuPanel extends JPanel {
             case 5:
                 t.setText(General.recoveryTime+"");
             case 6: // Risorse
+                //t.setText(General.resources+"");
                 t.setEnabled(false);
                 t.setBackground(MyFrame.backCol1);
                 break;

@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 
 public class Person {
@@ -12,6 +13,8 @@ public class Person {
     private int vx, vy;
     private String type;   // colore
     private boolean movement = true;     //movimento si/no
+
+    private boolean quarantine = false;
 
     private boolean incTimer = false;    //incubation timer on/off
     private int incDays = 0;
@@ -97,7 +100,7 @@ public class Person {
         Rectangle r2 = new Rectangle(p.x, p.y, ovalDim, ovalDim);
 
         //collision check
-        if(r1.intersects(r2)){
+        if(r1.intersects(r2) && !this.quarantine && !p.quarantine){
             //add to meeting list
             this.meetings.add(p);
             p.meetings.add(this);
@@ -184,6 +187,7 @@ public class Person {
 
     public void checkLethality(){
         if(this.type.equals("red")){
+            General.resources -= General.careCost;
             if(incDays == theDay){
                 if(Math.random() < General.lethality) {
                     incTimer = true;
@@ -223,8 +227,20 @@ public class Person {
         }
     }
 
+    public boolean getQuarantine() {
+        return quarantine;
+    }
 
+    public void setQuarantine(boolean q) {
+        this.quarantine = q;
+    }
 
+    public boolean test(){
+        if(this.getType().equals("yellow")){
+            return true;
+        };
+        return false;
+    }
 
 
 
