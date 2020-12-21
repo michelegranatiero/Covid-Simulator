@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.text.DecimalFormat;
 
 public class StatsPanel extends JPanel {
 
@@ -13,6 +14,7 @@ public class StatsPanel extends JPanel {
 
     JLabel[] labels;
     Color[] colors;
+    //DecimalFormat form = new DecimalFormat("####.##");
 
     public StatsPanel(){
         this.setLayout((new BorderLayout()));
@@ -54,7 +56,7 @@ public class StatsPanel extends JPanel {
 
     public void updateLabels(){
         //CENTERPANEL
-        cl.setText("Giorno: "+MyPanel.numDays+ "            Risorse: "+General.resources);
+        cl.setText("Giorno: "+MyPanel.numDays+ "          Risorse: "+ General.resources);
 
         //LEFTPANEL
         g.setText("Sani: " + Person.greens);

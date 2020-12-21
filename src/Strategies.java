@@ -2,22 +2,42 @@ import java.util.ArrayList;
 
 public class Strategies {
 
-    private int test = 0;
-    private int block = 0;
-    private ArrayList<Person> people;
+    private static int cadence = 7;
+    private static int count = 0;
+    //private static boolean countSwitch = false;
 
-    public Strategies( /*parametro*/ ){
+    private ArrayList<Person> people; //only greens and yellows
 
+    public Strategies( ArrayList<Person> arr, int days){
+        if(count == 0 || (days - count) >= cadence){
+            people = arr;
+            count = days;
+            switch(General.strategy){
+                case 0:
+                    testACampione();
+                    break;
+                case 1:
+                    //
+                    break;
+            }
+        }
     }
 
     public void testACampione(){
-        int sample = people.size()/4;
+        int sample = General.population/8; //dimensione del campione
         ArrayList<Person> sampleArray = new ArrayList<>();
-        for( int i = 0; i < sample; i++){
+
+        while(sampleArray.size() < sample && sampleArray.size() < people.size()){
             int r = (int)(Math.random()*people.size());
             sampleArray.add(people.remove(r));
         }
-        //se è rosso lo fermo a prescindere (for p in rossi)
+
+        for(Person p : sampleArray){
+            if(p.test()){
+                p.setMovement(false);
+            }
+        }
+
     }
 
 

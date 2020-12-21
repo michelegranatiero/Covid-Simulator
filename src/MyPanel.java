@@ -10,12 +10,14 @@ public class MyPanel extends JPanel {
     private int time = 0;           //tempo reale (milliseconds)
     //private int dayValue = 500;   //quanto vale un giorno (milliseconds)
     //private int dayCycle = 0;     //inizializzato per ciclare un giorno
-    private int contIncontri = General.velocity;
+    private int contIncontri = General.velocity; //dynamic velocity vd
     private boolean end1 = false;   //
     private boolean end2 = false;
     private boolean end3 = false;
     private final ArrayList<Person> people = new ArrayList<>();
     private final ArrayList<Person> deaths = new ArrayList<>();
+    private final ArrayList<Person> canBeTested;
+    Strategies strategy;
 
 
 
@@ -25,11 +27,12 @@ public class MyPanel extends JPanel {
         this.setBackground(MyFrame.backCol2);
         this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 
+
         for(int i=0; i<General.initPopulation; i++){
             people.add(new Person());
         }
-
         people.get(0).setYellowFromGreen();
+        canBeTested = new ArrayList<>(people);
 
     }
 
@@ -43,6 +46,13 @@ public class MyPanel extends JPanel {
             numDays++;
             contIncontri = 0;
 
+
+            //STRATEGY
+            if(Person.reds >= 1){
+                strategy = new Strategies(canBeTested, numDays);
+            }
+
+
             //printExit();
             //int vel = 0;  //control
             for(Person p: people){
@@ -54,18 +64,19 @@ public class MyPanel extends JPanel {
                     General.resources++;
                 }
                 //change of "state"/color
-                if(p.getType().equals("red")){  // red to black/blue maybe
-                    p.checkLethality();
-                }
-                if(p.getType().equals("yellow")){   // yellow to red/blue maybe
-                    p.checkSymptomaticity();
-                }
-                if(p.getType().equals("green")){    // green to yellow
-                    p.checkInfectivity();
-                }
-                if(p.getType().equals("black")){    // black
-                    deaths.add(p);
-                    General.population--;
+                switch (p.getType()) {
+                    case "red" -> {     // red to black/blue maybe
+                        General.resources -= General.careCost;
+                        p.checkLethality();
+                        canBeTested.remove(p);
+                    }
+                    case "yellow" -> p.checkSymptomaticity();   // yellow to red/blue maybe
+                    case "green" -> p.checkInfectivity();   // green to yellow
+                    case "blue" -> canBeTested.remove(p);
+                    case "black" -> {
+                        deaths.add(p);
+                        General.population--;
+                    }
                 }
             }
             //vel = Math.round((float)vel/people.size());   //control
@@ -74,6 +85,7 @@ public class MyPanel extends JPanel {
         }/*else{
             dayCycle += MyFrame.refreshRate;
         } */
+
 
         //check collisions
         for(int i = 0; i<people.size(); i++){
@@ -85,7 +97,9 @@ public class MyPanel extends JPanel {
         for(Person p: people){
             contIncontri+= p.getMeetings().size();
         }
-        contIncontri = Math.round((float)contIncontri/people.size());
+        contIncontri = Math.round((float)contIncontri/people.size()); //update dynamic velocity vd
+        General.r0 = contIncontri * General.recoveryTime * General.infectivity; //update r0 factor
+
         //remove deaths from people
         for(Person p: deaths){
             people.remove(p);

@@ -3,7 +3,7 @@ import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 
 public class Person {
-    private final int ovalDim = 13;
+    private final int ovalDim = 10;
     static Color myGreen = new Color(0, 180, 51);
     static Color myYellow = new Color(255, 153, 0);
     static Color myRed = new Color(140,0,0);
@@ -12,9 +12,8 @@ public class Person {
     private int x,y;
     private int vx, vy;
     private String type;   // colore
-    private boolean movement = true;     //movimento si/no
 
-    private boolean quarantine = false;
+    private boolean movement = true;     //movimento si/no
 
     private boolean incTimer = false;    //incubation timer on/off
     private int incDays = 0;
@@ -100,7 +99,7 @@ public class Person {
         Rectangle r2 = new Rectangle(p.x, p.y, ovalDim, ovalDim);
 
         //collision check
-        if(r1.intersects(r2) && !this.quarantine && !p.quarantine){
+        if(r1.intersects(r2)){
             //add to meeting list
             this.meetings.add(p);
             p.meetings.add(this);
@@ -130,6 +129,10 @@ public class Person {
 
     public boolean getMovement(){
         return this.movement;
+    }
+
+    public void setMovement(boolean movement) {
+        this.movement = movement;
     }
 
     public boolean isIncTimer() {
@@ -187,7 +190,6 @@ public class Person {
 
     public void checkLethality(){
         if(this.type.equals("red")){
-            General.resources -= General.careCost;
             if(incDays == theDay){
                 if(Math.random() < General.lethality) {
                     incTimer = true;
@@ -227,15 +229,9 @@ public class Person {
         }
     }
 
-    public boolean getQuarantine() {
-        return quarantine;
-    }
+    public boolean test(){ //only for greens and yellows
+        General.resources -= General.swabCost;
 
-    public void setQuarantine(boolean q) {
-        this.quarantine = q;
-    }
-
-    public boolean test(){
         if(this.getType().equals("yellow")){
             return true;
         };

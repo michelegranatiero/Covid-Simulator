@@ -28,7 +28,7 @@ public class GraphPanel extends JPanel {
 
         super.paintComponent(g1);
 
-        int graphWidth = MyPanel.numDays * panelWidth /100 - panelWidth /100; // 100 NUMERO MAX GIORNI CHE RIENTRANO NEL GRAFICO
+        int graphWidth = MyPanel.numDays * panelWidth /400 - panelWidth /400; // 400 NUMERO MAX GIORNI CHE RIENTRANO NEL GRAFICO
 
         gPoints.add(new Point(graphWidth, Math.round(Person.greens/c)));
         yPoints.add(new Point(graphWidth, Math.round(Person.yellows/c)));

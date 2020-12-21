@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 public class MyFrame extends JFrame {
 
-    static int refreshRate = 15;   //in millisecondi (usare multipli di 5)
+    static int refreshRate = 30;   //in millisecondi (usare multipli di 5)
     static Timer timer;
     static Color backCol1 = new Color(100, 120, 160);
     static Color backCol2 = new Color(20, 91, 156);
