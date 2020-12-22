@@ -5,16 +5,27 @@ import java.util.ArrayList;
 
 public class GraphPanel extends JPanel {
 
-    static ArrayList<Point> gPoints = new ArrayList<Point>();
-    static ArrayList<Point> yPoints = new ArrayList<Point>();
-    static ArrayList<Point> rPoints = new ArrayList<Point>();
-    static ArrayList<Point> bPoints = new ArrayList<Point>();
-    static ArrayList<Point> bkPoints = new ArrayList<Point>();
+    static ArrayList<Point> gPoints = new ArrayList<>();
+    static ArrayList<Point> yPoints = new ArrayList<>();
+    static ArrayList<Point> rPoints = new ArrayList<>();
+    static ArrayList<Point> bPoints = new ArrayList<>();
+    static ArrayList<Point> bkPoints = new ArrayList<>();
 
+    static ArrayList<Point> markerPoints = new ArrayList<>();
+
+
+    static int graphWidth;
     static int topPanelHeight = 100;
     private final int panelWidth = MyPanel.frameWidth/2;
+    private final int daysInGraph = 100; //NUMERO MAX GIORNI CHE RIENTRANO NEL GRAFICO
 
-    float c = General.initPopulation / (float)(topPanelHeight -10); //costante per mettere in scala il grafico
+    private final int vLineInterval = 10; //intervallo di giorni indicato dalla linea verticale
+
+    private final int strokeWidth = 4;
+    private final BasicStroke myStroke= new BasicStroke(strokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+
+    float c = General.initPopulation / (float)(topPanelHeight -10); //costante per mettere in scala il grafico verticalmente
+
 
     public GraphPanel(){
 
@@ -28,7 +39,7 @@ public class GraphPanel extends JPanel {
 
         super.paintComponent(g1);
 
-        int graphWidth = MyPanel.numDays * panelWidth /400 - panelWidth /400; // 400 NUMERO MAX GIORNI CHE RIENTRANO NEL GRAFICO
+        graphWidth = MyPanel.numDays * panelWidth/daysInGraph - panelWidth/daysInGraph;
 
         gPoints.add(new Point(graphWidth, Math.round(Person.greens/c)));
         yPoints.add(new Point(graphWidth, Math.round(Person.yellows/c)));
@@ -42,20 +53,33 @@ public class GraphPanel extends JPanel {
         drawCharts(g1, bPoints, Person.myBlue);
         drawCharts(g1, bkPoints, Color.black);
 
-
     }
 
     public void drawCharts(Graphics g1, ArrayList<Point> a, Color c){
-        if(a.size()>1) {
+        if(a.size()>=1) {
+            float flowFactor = 0;
             for (int i = 1; i < a.size(); i++) {
+                if(MyPanel.numDays >= daysInGraph){
+                    flowFactor = (daysInGraph-MyPanel.numDays)*((float)panelWidth/daysInGraph);//fattore per fare scorrere il grafico
+                    if(a.get(i).getTime()+flowFactor < 0){
+                        continue;
+                    }
+                }
                 Point p1 = a.get(i - 1);
                 Point p2 = a.get(i);
                 Graphics2D g2 = (Graphics2D) g1;
-                int strokeWidth = 4;
-                BasicStroke myStroke= new BasicStroke(strokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
                 g2.setStroke(myStroke);
                 g2.setColor(c);
-                g2.draw(new Line2D.Float(p1.getTime(), topPanelHeight -strokeWidth-p1.getValue(), p2.getTime(), topPanelHeight -strokeWidth-p2.getValue()));
+                g2.draw(new Line2D.Float(p1.getTime()+flowFactor, topPanelHeight-strokeWidth - p1.getValue(), p2.getTime()+flowFactor, topPanelHeight - strokeWidth-p2.getValue()));
+
+                if(p2.getDay()%(vLineInterval) == 0){
+                    g2.setStroke(new BasicStroke(1));
+                    g2.setColor(MyFrame.backCol2);
+                    g2.draw(new Line2D.Float(p2.getTime()+flowFactor, 0, p2.getTime()+flowFactor, topPanelHeight));
+                    g2.setFont(new Font("Segoe UI", Font.BOLD, 10));
+                    g2.drawString(""+p2.getDay(), p2.getTime()+flowFactor, 10);
+
+                }
             }
         }
     }

@@ -17,6 +17,7 @@ public class MyPanel extends JPanel {
     private final ArrayList<Person> people = new ArrayList<>();
     private final ArrayList<Person> deaths = new ArrayList<>();
     private final ArrayList<Person> canBeTested;
+    private final ArrayList<Person> redsArray;
     Strategies strategy;
 
 
@@ -33,6 +34,7 @@ public class MyPanel extends JPanel {
         }
         people.get(0).setYellowFromGreen();
         canBeTested = new ArrayList<>(people);
+        redsArray = new ArrayList<>();
 
     }
 
@@ -49,7 +51,7 @@ public class MyPanel extends JPanel {
 
             //STRATEGY
             if(Person.reds >= 1){
-                strategy = new Strategies(canBeTested, numDays);
+                strategy = new Strategies(canBeTested, redsArray, numDays);
             }
 
 
@@ -69,11 +71,16 @@ public class MyPanel extends JPanel {
                         General.resources -= General.careCost;
                         p.checkLethality();
                         canBeTested.remove(p);
+                        redsArray.add(p);
                     }
                     case "yellow" -> p.checkSymptomaticity();   // yellow to red/blue maybe
                     case "green" -> p.checkInfectivity();   // green to yellow
-                    case "blue" -> canBeTested.remove(p);
+                    case "blue" -> {
+                        canBeTested.remove(p);
+                        redsArray.remove(p);
+                    }
                     case "black" -> {
+                        redsArray.remove(p);
                         deaths.add(p);
                         General.population--;
                     }

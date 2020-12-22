@@ -1,8 +1,8 @@
 public class General {
-    static int initPopulation = 1000;
+    static int initPopulation = 500;
     static int population = initPopulation;  // numero di persone esistenti all'inizio della simulazione
     static int speed = 0;
-    static int velocity = 5; //numero di incontri di un individuo (in media) in un giorno
+    static int velocity = 3; //numero di incontri di un individuo (in media) in un giorno
     static int swabCost = 1;    //costo tampone
     static int careCost = 3*swabCost;    //costo giornaliero cure mediche per i malati (rossi)
 
@@ -20,5 +20,5 @@ public class General {
 
     static double r0 = 0; //fattore di contagiosità R0 iniziale
 
-    static int strategy = 0;
+    static int strategy = 1;
 }

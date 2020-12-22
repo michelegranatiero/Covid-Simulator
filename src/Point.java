@@ -1,9 +1,11 @@
 public class Point {
-    private int time, value;
+    private int time, value, day;
 
     public Point(int t, int v){
         time = t;
         value = v;
+        day = MyPanel.numDays;
+
     }
 
 
@@ -21,6 +23,10 @@ public class Point {
 
     public void setValue(int value) {
         this.value = value;
+    }
+
+    public int getDay() {
+        return day;
     }
 
 
