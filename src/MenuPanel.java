@@ -36,7 +36,7 @@ public class MenuPanel extends JPanel {
         add(labelTitle, c);
 
         labelList = new ArrayList<>();
-        String[] labTexts = {"Popolazione", "N° incontri giornalieri", "Infettività", "Sintomaticità", "Letalità", "Durata Virus", "***Risorse***"};
+        String[] labTexts = {"Popolazione", "N° incontri giornalieri", "Infettività", "Sintomaticità", "Letalità", "Durata Virus", "***Risorse***", "Strategia"};
         c.gridwidth=1;
         c.insets = new Insets(5,100,5,5);
         genLabelsFromArray(labelList, labTexts, this);
@@ -64,9 +64,23 @@ public class MenuPanel extends JPanel {
 
 
         //ACTION LISTENERS
-        buttonStart.addActionListener(e->MyFrame.card2Creator());   //START BUTTON
+        buttonStart.addActionListener(e->buttonStartClick(textList));   //START BUTTON
         buttonClear.addActionListener(e -> buttonClearClick(textList));
 
+    }
+
+    public void buttonStartClick(ArrayList<JTextField> texts){
+
+        General.initPopulation = Integer.parseInt(texts.get(0).getText());
+        General.velocity = Integer.parseInt(texts.get(1).getText());
+        General.infectivity = Double.parseDouble(texts.get(2).getText())/100;
+        General.symptomaticity = Double.parseDouble(texts.get(3).getText())/100;
+        General.lethality = Double.parseDouble(texts.get(4).getText())/100;
+        //General.recoveryTime = Integer.parseInt(texts.get(5).getText());
+        //General.resources = Integer.parseInt(texts.get(6).getText());
+        General.strategy = Integer.parseInt(texts.get(7).getText());
+        //BOTTOM
+        MyFrame.card2Creator();
     }
 
     public void buttonClearClick(ArrayList<JTextField> ctl){
@@ -106,13 +120,13 @@ public class MenuPanel extends JPanel {
     public void theFilter(int i, JTextField t){
         switch (i){
             case 0: //Popolazione
-                t.setText(General.population +"");
+                t.setText(General.initPopulation +"");
                 t.setCaretPosition(t.getText().length());
 
                 break;
             case 1: // Numero Incontri Giornalieri (velocity)
                 t.setText(General.velocity+"");
-                t.setEnabled(false);
+                //t.setEnabled(false);
                 t.setBackground(MyFrame.backCol1);
                 break;
             case 2:
@@ -126,10 +140,14 @@ public class MenuPanel extends JPanel {
                 break;
             case 5:
                 t.setText(General.recoveryTime+"");
+                break;
             case 6: // Risorse
-                //t.setText(General.resources+"");
+                t.setText(General.resources+"");
                 t.setEnabled(false);
                 t.setBackground(MyFrame.backCol1);
+                break;
+            case 7: //Strategia
+                t.setText(General.strategy+"");
                 break;
         }
     }

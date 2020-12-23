@@ -12,6 +12,9 @@ public class MyFrame extends JFrame {
     static CardLayout cardLayout;
     static JPanel cardsPanel;
     static MyButton stopButton;
+    static MyButton exitButton;
+    static JPanel card2;
+    static ActionListener actLis;
 
 
     public MyFrame(){
@@ -42,7 +45,7 @@ public class MyFrame extends JFrame {
     static void card2Creator(){
 
         //Simulation - Card2 Panel
-        JPanel card2 = new JPanel(new BorderLayout());
+        card2 = new JPanel(new BorderLayout());
         cardsPanel.add(card2, "2");
         //card2.setLayout(new BoxLayout(card2, BoxLayout.Y_AXIS));
 
@@ -65,21 +68,22 @@ public class MyFrame extends JFrame {
         card2.add(simulationPanel, BorderLayout.CENTER);
 
         //botPanel in Card2
-        JPanel botPanel = new JPanel();
+        JPanel botPanel = new JPanel(new BorderLayout());
         card2.add(botPanel, BorderLayout.SOUTH);
         botPanel.setBackground(backCol2);
         stopButton = new MyButton("STOP");
-        stopButton.setPreferredSize(new Dimension(88, 25));
-        botPanel.add(stopButton);
+        stopButton.setPreferredSize(new Dimension(200, 25));
+        botPanel.add(stopButton, BorderLayout.CENTER);
+        //exitButton = new MyButton("EXIT");
+        //exitButton.setPreferredSize(new Dimension(200, 25));
+        //botPanel.add(exitButton, BorderLayout.EAST);
 
-
-
-        //JButton startButton = new JButton("START");
-        //simulationPanel.add(startButton); //a quale pannello?
+        //ACTION LISTENERS
         stopButton.addActionListener(e -> stopButtonClick());
+        //exitButton.addActionListener(e -> exitButtonClick());
 
         //Timer
-        ActionListener actLis = e -> updateInvoker(simulationPanel, graph, stats);
+        actLis = e -> updateInvoker(simulationPanel, graph, stats);
         timer = new Timer(refreshRate, actLis);
 
 
@@ -110,6 +114,12 @@ public class MyFrame extends JFrame {
             isPlaying = true;
             stopButton.setText("STOP");
         }
+    }
+
+    public static void exitButtonClick(){//da sistemare
+        timer.stop();
+        JFrame f1 = (JFrame) SwingUtilities.getWindowAncestor(MyFrame.cardsPanel);
+        f1.dispose();
     }
 
     static void disabler(){
