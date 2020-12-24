@@ -11,8 +11,6 @@ public class GraphPanel extends JPanel {
     static ArrayList<Point> bPoints = new ArrayList<>();
     static ArrayList<Point> bkPoints = new ArrayList<>();
 
-    static ArrayList<Point> markerPoints = new ArrayList<>();
-
 
     static int graphWidth;
     static int topPanelHeight = 100;

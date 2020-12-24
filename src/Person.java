@@ -1,5 +1,4 @@
 import java.awt.*;
-import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 
 public class Person {
@@ -30,7 +29,7 @@ public class Person {
     static int blacks = 0;
 
 
-    private ArrayList<Person> meetings= new ArrayList<>();    //incontri di ciascun individuo in un giorno
+    private final ArrayList<Person> meetings= new ArrayList<>();    //incontri di ciascun individuo in un giorno
 
 
     public Person(){
@@ -232,10 +231,7 @@ public class Person {
     public boolean test(){ //only for greens and yellows
         General.resources -= General.swabCost;
 
-        if(this.getType().equals("yellow")){
-            return true;
-        };
-        return false;
+        return this.getType().equals("yellow");
     }
 
 
