@@ -23,11 +23,6 @@ public class General {
     static int strategy = 1;
 
     static void updateRes(){
-        try{
-            resources = Math.min(10*initPopulation*careCost, initPopulation*recoveryTime) - 1;
-        }catch(Exception e){
-            System.out.println("error");
-        };
-
+        resources = Math.min(10*initPopulation*careCost, initPopulation*recoveryTime) - 1;
     }
 }

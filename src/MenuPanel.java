@@ -1,17 +1,13 @@
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.*;
+import javax.swing.text.AbstractDocument;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 public class MenuPanel extends JPanel {
 
     GridBagConstraints c;
-    ArrayList<JLabel> labelList;
-    ArrayList<JTextField> textList;
+    static ArrayList<JLabel> labelList;
+    static ArrayList<JTextField> textList;
 
 
     public MenuPanel(){
@@ -155,7 +151,7 @@ public class MenuPanel extends JPanel {
 
 
 
-    public void theFilter(int i, JTextField t){
+    static void theFilter(int i, JTextField t){
         switch (i){
             case 0: //Popolazione
                 t.setText(General.initPopulation +"");
