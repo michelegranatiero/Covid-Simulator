@@ -1,12 +1,10 @@
-import javax.swing.*;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.DocumentFilter;
 import java.awt.*;
 
-public class PopulationDocFilter extends DocumentFilter {
-
+public class RecoveryDocFilter extends DocumentFilter {
 
     @Override
     public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
@@ -23,14 +21,14 @@ public class PopulationDocFilter extends DocumentFilter {
             }
         }
         if (isValidInteger){
-            if(!(fullNumber>0 && fullNumber<10000)){
+            if(!(fullNumber>0 && fullNumber<365)){
                 isValidInteger = false;
             }
             if(isValidInteger){
                 super.insertString(fb, offset, string, attr);
-                General.initPopulation = fullNumber;
+                General.recoveryTime = fullNumber;
                 General.updateRes();
-                MenuPanel.textList.get(6).setText(General.resources+"");//?????????????????????????????????????????
+                MenuPanel.textList.get(6).setText(General.resources+"");
                 System.out.println(General.resources + " "+MenuPanel.textList.get(6).getText());
             }
         } else
@@ -43,7 +41,7 @@ public class PopulationDocFilter extends DocumentFilter {
         int len = text.length();
         boolean isValidInteger = true;
         Document document = fb.getDocument ();
-        String fullText = new StringBuilder (document.getText(0, document.getLength ())).replace (offset, offset + len, text).toString ();
+        String fullText = new StringBuilder (document.getText (0, document.getLength ())).replace (offset, offset + len, text).toString ();
         int fullNumber = Integer.parseInt(fullText);
 
         for (int i = 0; i < len; i++) {
@@ -53,19 +51,18 @@ public class PopulationDocFilter extends DocumentFilter {
             }
         }
         if (isValidInteger){
-            if(!(fullNumber>0 && fullNumber<10000)){
+            if(!(fullNumber>0 && fullNumber<365)){
                 isValidInteger = false;
             }
             if(isValidInteger){
                 super.replace(fb, offset, length, text, attrs);
-                General.initPopulation = fullNumber;
+                General.recoveryTime = fullNumber;
                 General.updateRes();
-                MenuPanel.textList.get(6).setText(General.resources+""); //?????????????????????????????????????????
+                MenuPanel.textList.get(6).setText(General.resources+"");
                 System.out.println(General.resources + " "+MenuPanel.textList.get(6).getText());
-
-
             }
         } else
             Toolkit.getDefaultToolkit().beep();
     }
+
 }

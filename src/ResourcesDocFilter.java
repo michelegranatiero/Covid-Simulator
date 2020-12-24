@@ -1,13 +1,7 @@
-import javax.swing.*;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
-import javax.swing.text.DocumentFilter;
+import javax.swing.text.*;
 import java.awt.*;
 
-public class PopulationDocFilter extends DocumentFilter {
-
-
+public class ResourcesDocFilter extends DocumentFilter {
     @Override
     public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
         int len = string.length();
@@ -15,6 +9,7 @@ public class PopulationDocFilter extends DocumentFilter {
         Document document = fb.getDocument ();
         String fullText = new StringBuilder (document.getText (0, document.getLength ())).replace (offset, offset + len, string).toString ();
         int fullNumber = Integer.parseInt(fullText);
+        int max = General.resMax;
 
         for (int i = 0; i < len; i++) {
             if (!Character.isDigit(string.charAt(i))) {
@@ -23,15 +18,13 @@ public class PopulationDocFilter extends DocumentFilter {
             }
         }
         if (isValidInteger){
-            if(!(fullNumber>0 && fullNumber<10000)){
+            if(!(fullNumber>0 && fullNumber < max)){
                 isValidInteger = false;
             }
             if(isValidInteger){
                 super.insertString(fb, offset, string, attr);
-                General.initPopulation = fullNumber;
-                General.updateRes();
-                MenuPanel.textList.get(6).setText(General.resources+"");//?????????????????????????????????????????
-                System.out.println(General.resources + " "+MenuPanel.textList.get(6).getText());
+                General.resources = fullNumber;
+                System.out.println(max);
             }
         } else
             Toolkit.getDefaultToolkit().beep();
@@ -43,8 +36,9 @@ public class PopulationDocFilter extends DocumentFilter {
         int len = text.length();
         boolean isValidInteger = true;
         Document document = fb.getDocument ();
-        String fullText = new StringBuilder (document.getText(0, document.getLength ())).replace (offset, offset + len, text).toString ();
+        String fullText = new StringBuilder (document.getText (0, document.getLength ())).replace (offset, offset + len, text).toString ();
         int fullNumber = Integer.parseInt(fullText);
+        int max = General.resMax;
 
         for (int i = 0; i < len; i++) {
             if (!Character.isDigit(text.charAt(i))) {
@@ -53,17 +47,13 @@ public class PopulationDocFilter extends DocumentFilter {
             }
         }
         if (isValidInteger){
-            if(!(fullNumber>0 && fullNumber<10000)){
+            if(!(fullNumber>0 && fullNumber < max)){
                 isValidInteger = false;
             }
             if(isValidInteger){
                 super.replace(fb, offset, length, text, attrs);
-                General.initPopulation = fullNumber;
-                General.updateRes();
-                MenuPanel.textList.get(6).setText(General.resources+""); //?????????????????????????????????????????
-                System.out.println(General.resources + " "+MenuPanel.textList.get(6).getText());
-
-
+                General.resources = fullNumber;
+                System.out.println(General.resources);
             }
         } else
             Toolkit.getDefaultToolkit().beep();

@@ -9,6 +9,8 @@ public class MenuPanel extends JPanel {
     static ArrayList<JLabel> labelList;
     static ArrayList<JTextField> textList;
 
+    private JComboBox<String> cb;
+
 
     public MenuPanel(){
         super(new GridBagLayout());
@@ -109,7 +111,7 @@ public class MenuPanel extends JPanel {
         General.lethality = Double.parseDouble(texts.get(4).getText())/100;
         //General.recoveryTime = Integer.parseInt(texts.get(5).getText());
         //General.resources = Integer.parseInt(texts.get(6).getText());
-        General.strategy = Integer.parseInt(texts.get(7).getText());
+        General.strategy = cb.getSelectedIndex();
         //BOTTOM
         MyFrame.card2Creator();
     }
@@ -135,8 +137,21 @@ public class MenuPanel extends JPanel {
 
     public void genTextFields(ArrayList<JTextField> a, JPanel panel, int iterations) {
         for(int i = 0; i<iterations; i++ ){
+            if(i == 7){
+                cb = new JComboBox<>(Strategies.sNames);
+                cb.setBackground(Color.white);
+                cb.setPreferredSize(new Dimension(50,5));
+                cb.setFocusable(false);
+                cb.setFont(new Font("Segoe Condensed", Font.PLAIN, 14));
+                c.insets = new Insets(5,5,5,0);
+                c.gridwidth = 2;
+                panel.add(cb, c);
+                c.gridwidth = 1;
+
+                c.gridy++;
+                break;
+            }
             JTextField t = new JTextField();
-            ((AbstractDocument)t.getDocument()).setDocumentFilter(new NumberDocFilter());
             theFilter(i, t);
             t.setPreferredSize(new Dimension(100, 5));
             t.setMinimumSize(new Dimension(50,5));
@@ -160,29 +175,35 @@ public class MenuPanel extends JPanel {
                 break;
             case 1: // Numero Incontri Giornalieri (velocity)
                 t.setText(General.velocity+"");
+                ((AbstractDocument)t.getDocument()).setDocumentFilter(new VelocityDocFilter());
                 //t.setEnabled(false);
                 //t.setBackground(MyFrame.backCol1);
                 break;
             case 2:
                 t.setText((int)(General.symptomaticity*100)+"");
+                ((AbstractDocument)t.getDocument()).setDocumentFilter(new PercentDocFilter());
+
                 break;
             case 3:
                 t.setText((int)(General.infectivity*100)+"");
+                ((AbstractDocument)t.getDocument()).setDocumentFilter(new PercentDocFilter());
+
                 break;
             case 4:
                 t.setText((int)(General.lethality*100)+"");
+                ((AbstractDocument)t.getDocument()).setDocumentFilter(new PercentDocFilter());
                 break;
             case 5:
                 t.setText(General.recoveryTime+"");
+                ((AbstractDocument)t.getDocument()).setDocumentFilter(new RecoveryDocFilter());
                 break;
             case 6: // Risorse
                 t.setText(General.resources+"");
-                t.setEnabled(false);
-                t.setBackground(MyFrame.backCol1);
+                ((AbstractDocument)t.getDocument()).setDocumentFilter(new ResourcesDocFilter());
+                //t.setEnabled(false);
+                //t.setBackground(MyFrame.backCol1);
                 break;
-            case 7: //Strategia
-                t.setText(General.strategy+"");
-                break;
+
         }
     }
 

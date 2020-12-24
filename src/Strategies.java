@@ -7,7 +7,8 @@ public class Strategies {
     private static boolean switcher = true;
 
     private ArrayList<Person> canBeTested; //only greens and yellows
-    private ArrayList<Person> redsArray; //
+    private ArrayList<Person> redsArray;
+    static String[] sNames = {"Immunità di Gregge", "Test a Campione", "Traccia Sintomatici", "Metà in Lockdown"};
 
     public Strategies( ArrayList<Person> cbt, ArrayList<Person> reds,int days){
         if(count == 0 || (days - count) >= cadence){
