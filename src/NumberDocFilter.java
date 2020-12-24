@@ -5,7 +5,7 @@ import java.awt.*;
 
 class NumberDocFilter extends DocumentFilter {
     @Override
-    public void insertString(DocumentFilter.FilterBypass fp, int offset, String string, AttributeSet aset) throws BadLocationException {
+    public void insertString(DocumentFilter.FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
         int len = string.length();
         boolean isValidInteger = true;
 
@@ -16,24 +16,24 @@ class NumberDocFilter extends DocumentFilter {
             }
         }
         if (isValidInteger)
-            super.insertString(fp, offset, string, aset);
+            super.insertString(fb, offset, string, attr);
         else
             Toolkit.getDefaultToolkit().beep();
     }
 
     @Override
-    public void replace(DocumentFilter.FilterBypass fp, int offset, int length, String string, AttributeSet aset) throws BadLocationException {
-        int len = string.length();
+    public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+        int len = text.length();
         boolean isValidInteger = true;
 
         for (int i = 0; i < len; i++) {
-            if (!Character.isDigit(string.charAt(i))) {
+            if (!Character.isDigit(text.charAt(i))) {
                 isValidInteger = false;
                 break;
             }
         }
         if (isValidInteger)
-            super.replace(fp, offset, length, string, aset);
+            super.replace(fb, offset, length, text, attrs);
         else
             Toolkit.getDefaultToolkit().beep();
     }
