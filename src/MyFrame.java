@@ -72,10 +72,10 @@ public class MyFrame extends JFrame {
         card2.add(botPanel, BorderLayout.SOUTH);
         botPanel.setBackground(backCol2);
         stopButton = new MyButton("STOP");
-        stopButton.setPreferredSize(new Dimension(200, 25));
+        stopButton.setPreferredSize(new Dimension(200, 35));
         botPanel.add(stopButton, BorderLayout.CENTER);
         //exitButton = new MyButton("EXIT");
-        //exitButton.setPreferredSize(new Dimension(200, 25));
+        //exitButton.setPreferredSize(new Dimension(200, 35));
         //botPanel.add(exitButton, BorderLayout.EAST);
 
         //ACTION LISTENERS
