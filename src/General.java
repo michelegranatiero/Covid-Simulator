@@ -27,7 +27,12 @@ public class General {
 
 
     static void updateRes(){
+        System.out.println(resources+" res prima");
         resMax = Math.min(10*initPopulation*careCost, initPopulation*recoveryTime) - 1;
-        resources = resMax;
+        System.out.println(resMax +" resmax");
+        if(resources>resMax){
+            resources = resMax;
+        }
+        System.out.println(resources +" res dopo");
     }
 }

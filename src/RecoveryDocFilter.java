@@ -25,11 +25,9 @@ public class RecoveryDocFilter extends DocumentFilter {
                 isValidInteger = false;
             }
             if(isValidInteger){
+                General.initPopulation = fullNumber;
                 super.insertString(fb, offset, string, attr);
-                General.recoveryTime = fullNumber;
-                General.updateRes();
-                MenuPanel.textList.get(6).setText(General.resources+"");
-                System.out.println(General.resources + " "+MenuPanel.textList.get(6).getText());
+
             }
         } else
             Toolkit.getDefaultToolkit().beep();
@@ -55,11 +53,9 @@ public class RecoveryDocFilter extends DocumentFilter {
                 isValidInteger = false;
             }
             if(isValidInteger){
+                General.initPopulation = fullNumber;
                 super.replace(fb, offset, length, text, attrs);
-                General.recoveryTime = fullNumber;
-                General.updateRes();
-                MenuPanel.textList.get(6).setText(General.resources+"");
-                System.out.println(General.resources + " "+MenuPanel.textList.get(6).getText());
+
             }
         } else
             Toolkit.getDefaultToolkit().beep();

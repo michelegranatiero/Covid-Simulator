@@ -1,6 +1,11 @@
 import javax.swing.*;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 import javax.swing.text.AbstractDocument;
 import java.awt.*;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 public class MenuPanel extends JPanel {
@@ -10,6 +15,8 @@ public class MenuPanel extends JPanel {
     static ArrayList<JTextField> textList;
 
     private JComboBox<String> cb;
+
+    static JLabel resMax;
 
 
     public MenuPanel(){
@@ -33,7 +40,7 @@ public class MenuPanel extends JPanel {
         add(labelTitle, c);
 
         labelList = new ArrayList<>();
-        String[] labTexts = {"Popolazione", "N° incontri giornalieri", "Infettività", "Sintomaticità", "Letalità", "Durata Virus (gg)", "***Risorse***", "Strategia"};
+        String[] labTexts = {"Popolazione", "N° incontri giornalieri", "Infettività", "Sintomaticità", "Letalità", "Durata Virus (gg)", "Risorse", "Strategia"};
         c.gridx = 1;
         c.anchor = GridBagConstraints.CENTER;
         c.gridwidth = 1;
@@ -88,6 +95,13 @@ public class MenuPanel extends JPanel {
         per3.setHorizontalAlignment(percent.getHorizontalAlignment());
         c.gridy++;
         add(per3, c);
+
+        resMax = new JLabel(General.resMax+" max");
+        resMax.setFont(new Font("Segoe Condensed", Font.PLAIN, 12));
+        resMax.setVerticalAlignment(percent.getVerticalAlignment());
+        resMax.setHorizontalAlignment(percent.getHorizontalAlignment());
+        c.gridy = 7;
+        add(resMax, c);
 
 
 
@@ -172,6 +186,26 @@ public class MenuPanel extends JPanel {
                 t.setText(General.initPopulation +"");
                 t.setCaretPosition(t.getText().length());
                 ((AbstractDocument)t.getDocument()).setDocumentFilter(new PopulationDocFilter());
+                t.addFocusListener(new FocusAdapter() {
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                        General.updateRes();
+                        MenuPanel.resMax.setText(General.resMax+" max");
+                        ((AbstractDocument) textList.get(6).getDocument()).setDocumentFilter(new NumberDocFilter());
+                        textList.get(6).setText(General.resources+"");
+                        ((AbstractDocument)textList.get(6).getDocument()).setDocumentFilter(new ResourcesDocFilter());
+                    }
+
+                    @Override
+                    public void focusGained(FocusEvent e) {
+                        General.updateRes();
+                        MenuPanel.resMax.setText(General.resMax+" max");
+                        ((AbstractDocument) textList.get(6).getDocument()).setDocumentFilter(new NumberDocFilter());
+                        textList.get(6).setText(General.resources+"");
+                        ((AbstractDocument)textList.get(6).getDocument()).setDocumentFilter(new ResourcesDocFilter());
+                    }
+
+                });
                 break;
             case 1: // Numero Incontri Giornalieri (velocity)
                 t.setText(General.velocity+"");
@@ -196,17 +230,55 @@ public class MenuPanel extends JPanel {
             case 5:
                 t.setText(General.recoveryTime+"");
                 ((AbstractDocument)t.getDocument()).setDocumentFilter(new RecoveryDocFilter());
+                t.addFocusListener(new FocusAdapter() {
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                        General.updateRes();
+                        MenuPanel.resMax.setText(General.resMax+" max");
+                        ((AbstractDocument) textList.get(6).getDocument()).setDocumentFilter(new NumberDocFilter());
+                        textList.get(6).setText(General.resources+"");
+                        ((AbstractDocument)textList.get(6).getDocument()).setDocumentFilter(new ResourcesDocFilter());
+                    }
+
+                    @Override
+                    public void focusGained(FocusEvent e) {
+                        General.updateRes();
+                        MenuPanel.resMax.setText(General.resMax+" max");
+                        ((AbstractDocument) textList.get(6).getDocument()).setDocumentFilter(new NumberDocFilter());
+                        textList.get(6).setText(General.resources+"");
+                        ((AbstractDocument)textList.get(6).getDocument()).setDocumentFilter(new ResourcesDocFilter());
+                    }
+                });
                 break;
             case 6: // Risorse
                 t.setText(General.resources+"");
                 ((AbstractDocument)t.getDocument()).setDocumentFilter(new ResourcesDocFilter());
+
+                t.addFocusListener(new FocusAdapter() {
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                        ((AbstractDocument) t.getDocument()).setDocumentFilter(new NumberDocFilter());
+                        t.setText(General.resources+"");
+                        ((AbstractDocument)t.getDocument()).setDocumentFilter(new ResourcesDocFilter());
+
+                    }
+
+                    @Override
+                    public void focusGained(FocusEvent e) {
+                        ((AbstractDocument) t.getDocument()).setDocumentFilter(new NumberDocFilter());
+                        t.setText(General.resources+"");
+                        ((AbstractDocument)t.getDocument()).setDocumentFilter(new ResourcesDocFilter());
+                    }
+
+                });
+
+
                 //t.setEnabled(false);
                 //t.setBackground(MyFrame.backCol1);
                 break;
 
         }
     }
-
 
 
 

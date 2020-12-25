@@ -26,11 +26,8 @@ public class PopulationDocFilter extends DocumentFilter {
                 isValidInteger = false;
             }
             if(isValidInteger){
-                super.insertString(fb, offset, string, attr);
                 General.initPopulation = fullNumber;
-                General.updateRes();
-                MenuPanel.textList.get(6).setText(General.resources+"");//?????????????????????????????????????????
-                System.out.println(General.resources + " "+MenuPanel.textList.get(6).getText());
+                super.insertString(fb, offset, string, attr);
             }
         } else
             Toolkit.getDefaultToolkit().beep();
@@ -56,11 +53,10 @@ public class PopulationDocFilter extends DocumentFilter {
                 isValidInteger = false;
             }
             if(isValidInteger){
-                super.replace(fb, offset, length, text, attrs);
                 General.initPopulation = fullNumber;
-                General.updateRes();
-                MenuPanel.textList.get(6).setText(General.resources+""); //?????????????????????????????????????????
-                System.out.println(General.resources + " "+MenuPanel.textList.get(6).getText());
+                super.replace(fb, offset, length, text, attrs);
+
+
 
 
             }
