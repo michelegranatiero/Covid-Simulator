@@ -25,9 +25,8 @@ public class RecoveryDocFilter extends DocumentFilter {
                 isValidInteger = false;
             }
             if(isValidInteger){
-                General.initPopulation = fullNumber;
+                General.recoveryTime = fullNumber;
                 super.insertString(fb, offset, string, attr);
-
             }
         } else
             Toolkit.getDefaultToolkit().beep();
@@ -53,9 +52,8 @@ public class RecoveryDocFilter extends DocumentFilter {
                 isValidInteger = false;
             }
             if(isValidInteger){
-                General.initPopulation = fullNumber;
+                General.recoveryTime = fullNumber;
                 super.replace(fb, offset, length, text, attrs);
-
             }
         } else
             Toolkit.getDefaultToolkit().beep();

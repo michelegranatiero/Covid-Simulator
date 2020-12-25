@@ -55,10 +55,6 @@ public class PopulationDocFilter extends DocumentFilter {
             if(isValidInteger){
                 General.initPopulation = fullNumber;
                 super.replace(fb, offset, length, text, attrs);
-
-
-
-
             }
         } else
             Toolkit.getDefaultToolkit().beep();

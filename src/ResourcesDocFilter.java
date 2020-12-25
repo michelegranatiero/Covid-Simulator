@@ -24,8 +24,6 @@ public class ResourcesDocFilter extends DocumentFilter {
             if(isValidInteger){
                 super.insertString(fb, offset, string, attr);
                 General.resources = fullNumber;
-                System.out.println(General.resources + " resourcesdoc");
-                System.out.println(General.resMax + " resourcesMaxdoc");
 
             }
         } else
@@ -54,8 +52,6 @@ public class ResourcesDocFilter extends DocumentFilter {
             if(isValidInteger){
                 super.replace(fb, offset, length, text, attrs);
                 General.resources = fullNumber;
-                System.out.println(General.resources + " resourcesdoc");
-                System.out.println(General.resMax + " resourcesMaxdoc");
 
 
             }

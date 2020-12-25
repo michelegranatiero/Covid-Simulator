@@ -253,7 +253,6 @@ public class MenuPanel extends JPanel {
             case 6: // Risorse
                 t.setText(General.resources+"");
                 ((AbstractDocument)t.getDocument()).setDocumentFilter(new ResourcesDocFilter());
-
                 t.addFocusListener(new FocusAdapter() {
                     @Override
                     public void focusLost(FocusEvent e) {
