@@ -75,7 +75,7 @@ public class GraphPanel extends JPanel {
                     g2.setColor(MyFrame.backCol2);
                     g2.draw(new Line2D.Float(p2.getTime()+flowFactor, 0, p2.getTime()+flowFactor, topPanelHeight));
                     g2.setFont(new Font("Segoe UI", Font.BOLD, 10));
-                    g2.drawString(""+p2.getDay(), p2.getTime()+flowFactor, 10);
+                    g2.drawString(" "+p2.getDay(), p2.getTime()+flowFactor, 10);
 
                 }
             }
