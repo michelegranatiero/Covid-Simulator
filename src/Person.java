@@ -3,10 +3,13 @@ import java.util.ArrayList;
 
 public class Person {
     private final int ovalDim = 10;
-    static Color myGreen = new Color(0, 180, 51);
-    static Color myYellow = new Color(255, 153, 0);
-    static Color myRed = new Color(140,0,0);
-    static Color myBlue = new Color(50,170,255);
+    static int opacity = 200;
+    static Color myGreen = new Color(0, 180, 51, opacity);
+    static Color myYellow = new Color(255, 153, 0, opacity);
+    static Color myRed = new Color(140,0,0, opacity);
+    static Color myBlue = new Color(50,170,255, opacity);
+    static Color myBlack = new Color(0,0,0, opacity);
+
 
     private int x,y;
     private int vx, vy;
@@ -66,7 +69,7 @@ public class Person {
                 g.setColor(myBlue);
                 break;
             case "black": //death
-                g.setColor(Color.black);
+                g.setColor(myBlack);
                 break;
         }
 

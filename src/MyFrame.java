@@ -7,12 +7,11 @@ public class MyFrame extends JFrame {
 
     static int refreshRate = 30;   //in millisecondi (usare multipli di 5)
     static Timer timer;
-    static Color backCol1 = new Color(110, 130, 170);
+    static Color backCol1 = new Color(100-10, 120-10, 160-10);
     static Color backCol2 = new Color(20, 91, 156);
     static CardLayout cardLayout;
     static JPanel cardsPanel;
     static MyButton stopButton;
-    static MyButton exitButton;
     static JPanel card2;
     static ActionListener actLis;
 
@@ -116,14 +115,9 @@ public class MyFrame extends JFrame {
         }
     }
 
-    public static void exitButtonClick(){//da sistemare
-        timer.stop();
-        JFrame f1 = (JFrame) SwingUtilities.getWindowAncestor(MyFrame.cardsPanel);
-        f1.dispose();
-    }
-
-    static void disabler(){
+    static void disabler(String s){
         stopButton.setEnabled(false);
+        stopButton.setText(s);
     }
 
 
@@ -134,7 +128,7 @@ public class MyFrame extends JFrame {
 
 
     public static void main(String[] args) {
-        MyFrame Frame = new MyFrame();
+        new MyFrame();
 
     }
 }

@@ -49,7 +49,7 @@ public class GraphPanel extends JPanel {
         drawCharts(g1, yPoints, Person.myYellow);
         drawCharts(g1, rPoints, Person.myRed);
         drawCharts(g1, bPoints, Person.myBlue);
-        drawCharts(g1, bkPoints, Color.black);
+        drawCharts(g1, bkPoints, Person.myBlack);
 
     }
 
@@ -72,7 +72,7 @@ public class GraphPanel extends JPanel {
 
                 if(p2.getDay()%(vLineInterval) == 0){
                     g2.setStroke(new BasicStroke(1));
-                    g2.setColor(MyFrame.backCol2);
+                    g2.setColor(new Color(250,250,250, 10));
                     g2.draw(new Line2D.Float(p2.getTime()+flowFactor, 0, p2.getTime()+flowFactor, topPanelHeight));
                     g2.setFont(new Font("Segoe UI", Font.BOLD, 10));
                     g2.drawString(" "+p2.getDay(), p2.getTime()+flowFactor, 10);

@@ -7,7 +7,7 @@ public class MyPanel extends JPanel {
 
     static int frameWidth = 1200, frameHeight = 500;
     static int numDays = 0;         //conteggio
-    private int time = 0;           //tempo reale (milliseconds)
+    //tempo reale (milliseconds)
     //private int dayValue = 500;   //quanto vale un giorno (milliseconds)
     //private int dayCycle = 0;     //inizializzato per ciclare un giorno
     private int contIncontri = General.velocity; //dynamic velocity vd
@@ -40,8 +40,6 @@ public class MyPanel extends JPanel {
 
     @Override
     public void paintComponent(Graphics g){
-
-        time +=MyFrame.refreshRate;
 
         if(contIncontri>=General.velocity){     // change possibility: if dayCycle=dayValue;
             //dayCycle = 0;
@@ -128,7 +126,7 @@ public class MyPanel extends JPanel {
             if(end1){
                 System.out.println("LA MALATTIA HA VINTO!");
                 MyFrame.timer.stop();
-                MyFrame.disabler();
+                MyFrame.disabler("LA MALATTIA HA VINTO!");
             }else{end1=true;}
         }
         if(General.resources <= 0){
@@ -136,7 +134,7 @@ public class MyPanel extends JPanel {
                 System.out.println("COLLASSO! RISORSE TERMINATE!");
                 General.resources = 0;
                 MyFrame.timer.stop();
-                MyFrame.disabler();
+                MyFrame.disabler("COLLASSO! RISORSE TERMINATE!");
 
             }else{end2 = true;}
 
@@ -145,7 +143,7 @@ public class MyPanel extends JPanel {
             if(end3){
                 System.out.println("MALATTIA DEBELLATA!");
                 MyFrame.timer.stop();
-                MyFrame.disabler();
+                MyFrame.disabler("MALATTIA DEBELLATA!");
             }else{
                 boolean end = true;
                 for(Person p: people){
@@ -159,15 +157,6 @@ public class MyPanel extends JPanel {
                 }
             }
         }
-    }
-
-    public void printExit(){
-        System.out.println("Giorno: "+numDays+ "; Risorse: "+General.resources);
-        System.out.print("Sani: "+Person.greens);
-        System.out.print("; Asintomatici: "+Person.yellows);
-        System.out.print("; Sintomatici: "+Person.reds);
-        System.out.print("; Guariti: "+Person.blues);
-        System.out.println("; Deceduti: "+Person.blacks+"\n");
     }
 
 

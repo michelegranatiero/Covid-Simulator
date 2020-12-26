@@ -19,7 +19,7 @@ public class StatsPanel extends JPanel {
         this.setLayout((new BorderLayout()));
         this.setBackground(MyFrame.backCol1);
 
-        colors = new Color[]{Person.myGreen, Person.myYellow, Person.myRed, Person.myBlue, Color.black};
+        colors = new Color[]{Person.myGreen, Person.myYellow, Person.myRed, Person.myBlue, Person.myBlack};
         labels = new JLabel[]{g, y, r, bl, bk};
 
         //CENTERPANEL
