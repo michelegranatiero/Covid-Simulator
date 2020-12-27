@@ -29,6 +29,7 @@ public class Strategies {
                         stopHalfPop();
                         switcher = false;
                     }
+                    break;
             }
         }
     }
@@ -77,5 +78,4 @@ public class Strategies {
             }
         }
     }
-
 }

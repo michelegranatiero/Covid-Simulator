@@ -1,21 +1,16 @@
 import javax.swing.*;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
 import javax.swing.text.AbstractDocument;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.util.ArrayList;
 
 public class MenuPanel extends JPanel {
 
-    GridBagConstraints c;
+    private final GridBagConstraints c;
     static ArrayList<JLabel> labelList;
     static ArrayList<JTextField> textList;
-
     private JComboBox<String> cb;
-
     static JLabel resMax;
 
 
@@ -44,7 +39,6 @@ public class MenuPanel extends JPanel {
         c.gridx = 1;
         c.anchor = GridBagConstraints.CENTER;
         c.gridwidth = 1;
-        //c.weightx = 0.5;
         c.insets = new Insets(5,5,5,5);
         genLabelsFromArray(labelList, labTexts, this);
 
@@ -58,16 +52,13 @@ public class MenuPanel extends JPanel {
 
         MyButton buttonClear = new MyButton("Clear");
         c.insets = new Insets(5,5,5,0);
-        //c.ipadx=300;
         c.gridx=1;
         c.gridy++;
-        //c.insets = new Insets(40,100,5,5);
         add(buttonClear, c);
 
         MyButton buttonStart = new MyButton("Start");
         c.gridwidth = 2;
         c.gridx=2;
-        //c.insets = new Insets(40,5,5,100);
         add(buttonStart, c);
 
 
@@ -96,6 +87,7 @@ public class MenuPanel extends JPanel {
         c.gridy++;
         add(per3, c);
 
+        //RESMAX LABEL
         resMax = new JLabel(General.resMax+" max");
         resMax.setFont(new Font("Segoe Condensed", Font.PLAIN, 12));
         resMax.setVerticalAlignment(percent.getVerticalAlignment());
@@ -103,31 +95,30 @@ public class MenuPanel extends JPanel {
         c.gridy = 7;
         add(resMax, c);
 
-
-
-
-
-
-
         //ACTION LISTENERS
         buttonStart.addActionListener(e->buttonStartClick(textList));   //START BUTTON
-        buttonClear.addActionListener(e -> buttonClearClick(textList));
+        buttonClear.addActionListener(e -> buttonClearClick(textList)); //CLEAR BUTTON
 
     }
 
     public void buttonStartClick(ArrayList<JTextField> texts){
 
-        General.initPopulation = Integer.parseInt(texts.get(0).getText());
-        General.population = General.initPopulation;    //UPDATE
-        General.velocity = Integer.parseInt(texts.get(1).getText());
-        General.infectivity = Double.parseDouble(texts.get(2).getText())/100;
-        General.symptomaticity = Double.parseDouble(texts.get(3).getText())/100;
-        General.lethality = Double.parseDouble(texts.get(4).getText())/100;
-        //General.recoveryTime = Integer.parseInt(texts.get(5).getText());
-        //General.resources = Integer.parseInt(texts.get(6).getText());
-        General.strategy = cb.getSelectedIndex();
-        //BOTTOM
-        MyFrame.card2Creator();
+        try{
+            General.initPopulation = Integer.parseInt(texts.get(0).getText());
+            General.population = General.initPopulation;    //UPDATE
+            General.velocity = Integer.parseInt(texts.get(1).getText());
+            General.infectivity = Double.parseDouble(texts.get(2).getText())/100;
+            General.symptomaticity = Double.parseDouble(texts.get(3).getText())/100;
+            General.lethality = Double.parseDouble(texts.get(4).getText())/100;
+            General.recoveryTime = Integer.parseInt(texts.get(5).getText());
+            General.resources = Integer.parseInt(texts.get(6).getText());
+            General.strategy = cb.getSelectedIndex();
+            //BOTTOM
+            MyFrame.card2Creator();
+        }catch(Exception e){
+            System.out.println("Something went wrong");
+        }
+
     }
 
     public void buttonClearClick(ArrayList<JTextField> ctl){
@@ -139,7 +130,6 @@ public class MenuPanel extends JPanel {
     public void genLabelsFromArray(ArrayList<JLabel> a, String[] texts, JPanel panel){
         for (String text : texts) {
             JLabel l = new JLabel(text);
-            //l.setBorder(BorderFactory.createStrokeBorder(new BasicStroke()));   //BORDO PROVA
             l.setFont(new Font("Segoe UI", Font.BOLD, 16));
             l.setVerticalAlignment(JLabel.CENTER);
             l.setHorizontalAlignment(JLabel.LEFT);
@@ -161,7 +151,6 @@ public class MenuPanel extends JPanel {
                 c.gridwidth = 2;
                 panel.add(cb, c);
                 c.gridwidth = 1;
-
                 c.gridy++;
                 break;
             }
@@ -177,7 +166,6 @@ public class MenuPanel extends JPanel {
             c.gridy++;
         }
     }
-
 
 
     static void theFilter(int i, JTextField t){
@@ -207,27 +195,23 @@ public class MenuPanel extends JPanel {
 
                 });
                 break;
-            case 1: // Numero Incontri Giornalieri (velocity)
+            case 1: //Numero Incontri Giornalieri (velocity)
                 t.setText(General.velocity+"");
                 ((AbstractDocument)t.getDocument()).setDocumentFilter(new VelocityDocFilter());
-                //t.setEnabled(false);
-                //t.setBackground(MyFrame.backCol1);
                 break;
-            case 2:
-                t.setText((int)(General.symptomaticity*100)+"");
-                ((AbstractDocument)t.getDocument()).setDocumentFilter(new PercentDocFilter());
-
-                break;
-            case 3:
+            case 2: //Infettività
                 t.setText((int)(General.infectivity*100)+"");
                 ((AbstractDocument)t.getDocument()).setDocumentFilter(new PercentDocFilter());
-
                 break;
-            case 4:
+            case 3: //Sintomaticità
+                t.setText((int)(General.symptomaticity*100)+"");
+                ((AbstractDocument)t.getDocument()).setDocumentFilter(new PercentDocFilter());
+                break;
+            case 4: //Letalità
                 t.setText((int)(General.lethality*100)+"");
                 ((AbstractDocument)t.getDocument()).setDocumentFilter(new PercentDocFilter());
                 break;
-            case 5:
+            case 5: //Durata Virus
                 t.setText(General.recoveryTime+"");
                 ((AbstractDocument)t.getDocument()).setDocumentFilter(new RecoveryDocFilter());
                 t.addFocusListener(new FocusAdapter() {
@@ -250,7 +234,7 @@ public class MenuPanel extends JPanel {
                     }
                 });
                 break;
-            case 6: // Risorse
+            case 6: //Risorse
                 t.setText(General.resources+"");
                 ((AbstractDocument)t.getDocument()).setDocumentFilter(new ResourcesDocFilter());
                 t.addFocusListener(new FocusAdapter() {
@@ -270,15 +254,7 @@ public class MenuPanel extends JPanel {
                     }
 
                 });
-
-
-                //t.setEnabled(false);
-                //t.setBackground(MyFrame.backCol1);
                 break;
-
         }
     }
-
-
-
 }

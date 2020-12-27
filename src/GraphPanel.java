@@ -15,22 +15,23 @@ public class GraphPanel extends JPanel {
     static int graphWidth;
     static int topPanelHeight = 100;
     private final int panelWidth = MyPanel.frameWidth/2;
-    private final int daysInGraph = 100; //NUMERO MAX GIORNI CHE RIENTRANO NEL GRAFICO
+    private final int daysInGraph = 100; //NUMERO MAX DI GIORNI CHE RIENTRANO NEL GRAFICO
 
-    private final int vLineInterval = 10; //intervallo di giorni indicato dalla linea verticale
+    private final int vLineInterval = 10; //intervallo di giorni trascorsi tra due linee verticali
 
     private final int strokeWidth = 4;
     private final BasicStroke myStroke= new BasicStroke(strokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 
-    float c = General.initPopulation / (float)(topPanelHeight -10); //costante per mettere in scala il grafico verticalmente
+    private final float c = General.initPopulation / (float)(topPanelHeight -10); //costante per mettere in scala il grafico verticalmente
 
 
     public GraphPanel(){
 
         this.setBackground(MyFrame.backCol1);
         this.setPreferredSize(new Dimension(panelWidth, topPanelHeight));
-        //this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+
     }
+
 
     @Override
     public void paintComponent(Graphics g1){

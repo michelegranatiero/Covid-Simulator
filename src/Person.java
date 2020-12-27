@@ -13,7 +13,7 @@ public class Person {
 
     private int x,y;
     private int vx, vy;
-    private String type;   // colore
+    private String type;   //colore
 
     private boolean movement = true;     //movimento si/no
 
@@ -22,9 +22,7 @@ public class Person {
     private int theDay;                 //chosen day for checkSymptomaticity
     private int theDay2;                 //chosen day for checkLethality
 
-    //private boolean recTimer = false;    //recoverytimer on/off
-    //private int recDays = 0;
-
+    //CONTATORI
     static int greens = 0;
     static int yellows = 0;
     static int reds = 0;
@@ -49,12 +47,8 @@ public class Person {
     }
 
 
-
-
-
-
     public void paint(Graphics g){
-        //set the color of the Person object based on the health status
+        //set the color of the person based on the health status
         switch(type) {
             case "green": //normal
                 g.setColor(myGreen);
@@ -75,7 +69,7 @@ public class Person {
 
 
 
-        //x and y are updated by their velocities
+        //x and y updated by their velocities
         if(this.movement) {
             x += vx;
             y += vy;
@@ -220,8 +214,6 @@ public class Person {
         if(this.type.equals("blue")){
                 blues++;
                 this.movement = true;
-                //recTimer = false;
-                //recDays = 0;
         }
     }
 
@@ -233,7 +225,6 @@ public class Person {
 
     public boolean test(){ //only for greens and yellows
         General.resources -= General.swabCost;
-
         return this.getType().equals("yellow");
     }
 

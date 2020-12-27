@@ -41,11 +41,10 @@ public class MyPanel extends JPanel {
     @Override
     public void paintComponent(Graphics g){
 
-        if(contIncontri>=General.velocity){     // change possibility: if dayCycle=dayValue;
-            //dayCycle = 0;
+        if(contIncontri>=General.velocity){
+
             numDays++;
             contIncontri = 0;
-
 
             //STRATEGY
             if(Person.reds >= 1){
@@ -53,11 +52,9 @@ public class MyPanel extends JPanel {
             }
 
 
-            //printExit();
-            //int vel = 0;  //control
             for(Person p: people){
-                //vel += p.getMeetings().size();//control
-                p.resetMeetings();
+
+                p.resetMeetings();      //reset incontri Giornaliero
 
                 General.resources--;    //può essere ottimizzato
                 if(p.getMovement()){
@@ -84,12 +81,7 @@ public class MyPanel extends JPanel {
                     }
                 }
             }
-            //vel = Math.round((float)vel/people.size());   //control
-            //System.out.println(vel); //control
-
-        }/*else{
-            dayCycle += MyFrame.refreshRate;
-        } */
+        }
 
 
         //check collisions

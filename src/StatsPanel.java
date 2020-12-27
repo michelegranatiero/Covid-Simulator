@@ -3,24 +3,20 @@ import java.awt.*;
 
 public class StatsPanel extends JPanel {
 
-    JLabel g = new JLabel();
-    JLabel y = new JLabel();
-    JLabel r = new JLabel();
-    JLabel bl = new JLabel();
-    JLabel bk = new JLabel();
+    private final JLabel g = new JLabel();
+    private final JLabel y = new JLabel();
+    private final JLabel r = new JLabel();
+    private final JLabel bl = new JLabel();
+    private final JLabel bk = new JLabel();
 
-    JLabel cl = new JLabel();
-
-    JLabel[] labels;
-    Color[] colors;
-    //DecimalFormat form = new DecimalFormat("####.##");
+    private final JLabel cl = new JLabel();
 
     public StatsPanel(){
         this.setLayout((new BorderLayout()));
         this.setBackground(MyFrame.backCol1);
 
-        colors = new Color[]{Person.myGreen, Person.myYellow, Person.myRed, Person.myBlue, Person.myBlack};
-        labels = new JLabel[]{g, y, r, bl, bk};
+        Color[] colors = new Color[]{Person.myGreen, Person.myYellow, Person.myRed, Person.myBlue, Person.myBlack};
+        JLabel[] labels = new JLabel[]{g, y, r, bl, bk};
 
         //CENTERPANEL
         JPanel cenPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, GraphPanel.topPanelHeight/2 -12));
@@ -50,7 +46,6 @@ public class StatsPanel extends JPanel {
             i++;
             l.setFont(new Font("Segoe UI", Font.BOLD, 14));
         }
-
     }
 
     public void updateLabels(){
@@ -64,6 +59,4 @@ public class StatsPanel extends JPanel {
         bl.setText("Guariti: " + Person.blues);
         bk.setText("Deceduti: " + Person.blacks);
     }
-
-
 }
