@@ -96,12 +96,14 @@ public class MyFrame extends JFrame {
 
 
 
+    //refresh del simulatore
     public static void updateInvoker(MyPanel p1, GraphPanel p2, StatsPanel p3){
         p1.repaint();
         p2.repaint();
         p3.updateLabels();
     }
 
+    //azione del pulsante STOP/RESUME
     static boolean isPlaying = true;
     public static void stopButtonClick(){
         if(isPlaying){
@@ -115,6 +117,7 @@ public class MyFrame extends JFrame {
         }
     }
 
+    //disabilitare il pulsante STOP alla fine della simulazione
     static void disabler(String s){
         stopButton.setEnabled(false);
         stopButton.setText(s);

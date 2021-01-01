@@ -34,6 +34,7 @@ public class MenuPanel extends JPanel {
         c.gridwidth=4;
         add(labelTitle, c);
 
+        //genero una JLabel per ogni parametro
         labelList = new ArrayList<>();
         String[] labTexts = {"Popolazione", "N° incontri giornalieri", "Infettività", "Sintomaticità", "Letalità", "Durata Virus (gg)", "Risorse", "Strategia"};
         c.gridx = 1;
@@ -42,7 +43,7 @@ public class MenuPanel extends JPanel {
         c.insets = new Insets(5,5,5,5);
         genLabelsFromArray(labelList, labTexts, this);
 
-
+        //genero un JTextField per ogni parametro
         textList = new ArrayList<>();
         c.gridx=2;
         c.gridy=1;
@@ -50,19 +51,21 @@ public class MenuPanel extends JPanel {
         c.insets = new Insets(5,5,5,5);
         genTextFields(textList, this, labTexts.length);
 
+        //Pulsante Clear
         MyButton buttonClear = new MyButton("Clear");
         c.insets = new Insets(5,5,5,0);
         c.gridx=1;
         c.gridy++;
         add(buttonClear, c);
 
+        //Pulsante Start
         MyButton buttonStart = new MyButton("Start");
         c.gridwidth = 2;
         c.gridx=2;
         add(buttonStart, c);
 
 
-        //PERCENT LABELS
+        //Labels percentuali
         JLabel percent = new JLabel("%");
         percent.setFont(new Font("Segoe UI", Font.BOLD, 16));
         percent.setVerticalAlignment(JLabel.CENTER);
@@ -87,7 +90,7 @@ public class MenuPanel extends JPanel {
         c.gridy++;
         add(per3, c);
 
-        //RESMAX LABEL
+        //Label risorse massime
         resMax = new JLabel(General.resMax+" max");
         resMax.setFont(new Font("Segoe Condensed", Font.PLAIN, 12));
         resMax.setVerticalAlignment(percent.getVerticalAlignment());
@@ -95,7 +98,7 @@ public class MenuPanel extends JPanel {
         c.gridy = 7;
         add(resMax, c);
 
-        //ACTION LISTENERS
+        //ACTION LISTENERS PULSANTI
         buttonStart.addActionListener(e->buttonStartClick(textList));   //START BUTTON
         buttonClear.addActionListener(e -> buttonClearClick(textList)); //CLEAR BUTTON
 
@@ -103,7 +106,7 @@ public class MenuPanel extends JPanel {
 
     public void buttonStartClick(ArrayList<JTextField> texts){
 
-        try{
+        try{    //imposto i parametri
             General.initPopulation = Integer.parseInt(texts.get(0).getText());
             General.population = General.initPopulation;    //UPDATE
             General.velocity = Integer.parseInt(texts.get(1).getText());
@@ -114,7 +117,7 @@ public class MenuPanel extends JPanel {
             General.resources = Integer.parseInt(texts.get(6).getText());
             General.strategy = cb.getSelectedIndex();
             //BOTTOM
-            MyFrame.card2Creator();
+            MyFrame.card2Creator(); //Genero la simulazione
         }catch(Exception e){
             System.out.println("Something went wrong");
         }
@@ -123,10 +126,11 @@ public class MenuPanel extends JPanel {
 
     public void buttonClearClick(ArrayList<JTextField> ctl){
         for(JTextField ct: ctl){
-            ct.setText("");
+            ct.setText(""); //svuoto tutti i JTextField
         }
     }
 
+    //genero le JLabels da un array
     public void genLabelsFromArray(ArrayList<JLabel> a, String[] texts, JPanel panel){
         for (String text : texts) {
             JLabel l = new JLabel(text);
@@ -139,9 +143,10 @@ public class MenuPanel extends JPanel {
         }
     }
 
+    //genero i JTextField da un array
     public void genTextFields(ArrayList<JTextField> a, JPanel panel, int iterations) {
         for(int i = 0; i<iterations; i++ ){
-            if(i == 7){
+            if(i == 7){     //genero l'unico combo box del menù per la strategia
                 cb = new JComboBox<>(Strategies.sNames);
                 cb.setBackground(Color.white);
                 cb.setPreferredSize(new Dimension(50,5));
@@ -153,7 +158,7 @@ public class MenuPanel extends JPanel {
                 c.gridwidth = 1;
                 c.gridy++;
                 break;
-            }
+            }   //genero i textfield
             JTextField t = new JTextField();
             theFilter(i, t);
             t.setPreferredSize(new Dimension(100, 5));
@@ -168,6 +173,7 @@ public class MenuPanel extends JPanel {
     }
 
 
+    //valori iniziali JtextField e filtri per il testo
     static void theFilter(int i, JTextField t){
         switch (i){
             case 0: //Popolazione

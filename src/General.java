@@ -3,7 +3,7 @@ public class General {
     //Popolazione e incontri
     static int initPopulation = 500;
     static int population = initPopulation;  // numero di persone esistenti all'inizio della simulazione
-    static int speed = 0;
+    static int speed = 0;   //velocità delle persone (0 è la velocità di base e non è nulla)
     static int velocity = 3; //numero di incontri di un individuo (in media) in un giorno
 
 
@@ -26,7 +26,7 @@ public class General {
     static int strategy = 1;
 
 
-
+    //Metodo per aggiornare le risorse (utile al menù iniziale)
     static void updateRes(){
         resMax = Math.min(10*initPopulation*careCost, initPopulation*recoveryTime) - 1;
         if(resources>resMax){

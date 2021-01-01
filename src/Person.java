@@ -40,15 +40,17 @@ public class Person {
         x = (int)(Math.random()*(MyPanel.frameWidth - ovalDim));
         y = (int)(Math.random()*(MyPanel.frameHeight - ovalDim));
 
-        //Movement
+        //movimento
         vx = (int)(Math.random()*General.speed + 1)*(Math.random()<0.5?1:-1);
         vy = (int)(Math.random()*General.speed + 1)*(Math.random()<0.5?1:-1);
 
     }
 
 
-    public void paint(Graphics g){
-        //set the color of the person based on the health status
+    public void paint(Graphics g2){
+        Graphics2D g = (Graphics2D)g2;
+        g.setRenderingHints(new RenderingHints(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON));
+        //imposto il colore della persona in base allo stato di salute
         switch(type) {
             case "green": //normal
                 g.setColor(myGreen);
@@ -69,7 +71,7 @@ public class Person {
 
 
 
-        //x and y updated by their velocities
+        //x and y aggiornate con le loro velocità
         if(this.movement) {
             x += vx;
             y += vy;
@@ -84,13 +86,17 @@ public class Person {
         }
 
         g.fillOval(x, y, ovalDim, ovalDim);
+
+        //OVAL BORDER
+        //g.setColor(Color.BLACK);
+        //g.drawOval(x, y, ovalDim, ovalDim);
     }
 
 
 
     public void collision(Person p){
 
-        //Represent Person as Rectangle for simple collision detection
+        //Rappresento una persona con un rettangolo per semplificare la collision detection
         Rectangle r1 = new Rectangle(this.x, this.y, ovalDim, ovalDim);
         Rectangle r2 = new Rectangle(p.x, p.y, ovalDim, ovalDim);
 
@@ -223,7 +229,7 @@ public class Person {
         }
     }
 
-    public boolean test(){ //only for greens and yellows
+    public boolean test(){ //test (solo per greens and yellows)
         General.resources -= General.swabCost;
         return this.getType().equals("yellow");
     }

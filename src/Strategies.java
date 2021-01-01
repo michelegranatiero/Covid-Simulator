@@ -18,13 +18,13 @@ public class Strategies {
             switch(General.strategy){
                 case 0:     //immunità di gregge
                     break;
-                case 1:
+                case 1:     //a campione
                     testACampione();
                     break;
-                case 2:
+                case 2:     //in base agli incontri giornalieri
                     testMeetings();
                     break;
-                case 3:
+                case 3:     //fermo mezza popolazione
                     if(switcher){
                         stopHalfPop();
                         switcher = false;

@@ -11,13 +11,13 @@ public class MyPanel extends JPanel {
     //private int dayValue = 500;   //quanto vale un giorno (milliseconds)
     //private int dayCycle = 0;     //inizializzato per ciclare un giorno
     private int contIncontri = General.velocity; //dynamic velocity vd
-    private boolean end1 = false;   //
-    private boolean end2 = false;
-    private boolean end3 = false;
+    private boolean end1 = false;   //fine per malattia vince
+    private boolean end2 = false;   //fine per collasso
+    private boolean end3 = false;   //fine per malattia debellata
     private final ArrayList<Person> people = new ArrayList<>();
     private final ArrayList<Person> deaths = new ArrayList<>();
-    private final ArrayList<Person> canBeTested;
-    private final ArrayList<Person> redsArray;
+    private final ArrayList<Person> canBeTested;    //utile per strategia
+    private final ArrayList<Person> redsArray;      //utile per strategia
     Strategies strategy;
 
 
@@ -28,30 +28,33 @@ public class MyPanel extends JPanel {
         this.setBackground(MyFrame.backCol2);
         this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 
-
+        //genero la popolazione
         for(int i=0; i<General.initPopulation; i++){
             people.add(new Person());
         }
-        people.get(0).setYellowFromGreen();
+        people.get(0).setYellowFromGreen(); //inserisco il virus nella popolazione (paziente 0)
         canBeTested = new ArrayList<>(people);
         redsArray = new ArrayList<>();
 
     }
 
     @Override
-    public void paintComponent(Graphics g){
+    public void paintComponent(Graphics g2){
+        Graphics2D g = (Graphics2D)g2;
+        g.setRenderingHints(new RenderingHints(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON));
 
-        if(contIncontri>=General.velocity){
+        if(contIncontri>=General.velocity){     //i giorni avanzano quando la media degli incontri giornalieri è >= al parametro indicato
 
             numDays++;
             contIncontri = 0;
 
-            //STRATEGY
+            //STRATEGIA
             if(Person.reds >= 1){
                 strategy = new Strategies(canBeTested, redsArray, numDays);
             }
 
 
+            //controlli giornalieri
             for(Person p: people){
 
                 p.resetMeetings();      //reset incontri Giornaliero
@@ -84,7 +87,7 @@ public class MyPanel extends JPanel {
         }
 
 
-        //check collisions
+        //check collisioni
         for(int i = 0; i<people.size(); i++){
             for(int j = i+1; j<people.size(); j++){
                 people.get(i).collision(people.get(j));
@@ -97,15 +100,15 @@ public class MyPanel extends JPanel {
         contIncontri = Math.round((float)contIncontri/people.size()); //update dynamic velocity vd
         General.r0 = contIncontri * General.recoveryTime * General.infectivity; //update r0 factor
 
-        //remove deaths from people
+        //rimuovere deceduti da array People
         for(Person p: deaths){
             people.remove(p);
         }
 
-        //repaint "previous frame"
+        //repaint frame precedente
         super.paintComponent(g);
 
-        //paint Person objects
+        //paint Person
         for (Person p: people){
             p.paint(g);
         }
@@ -150,13 +153,5 @@ public class MyPanel extends JPanel {
             }
         }
     }
-
-
-
-
-
-
-    
-
 
 }

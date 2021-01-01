@@ -34,18 +34,22 @@ public class GraphPanel extends JPanel {
 
 
     @Override
-    public void paintComponent(Graphics g1){
+    public void paintComponent(Graphics g2){
+        Graphics2D g1 = (Graphics2D)g2;
+        g1.setRenderingHints(new RenderingHints(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON));
 
         super.paintComponent(g1);
 
         graphWidth = MyPanel.numDays * panelWidth/daysInGraph - panelWidth/daysInGraph;
 
+        //liste che contengono tuti i punti da collegare
         gPoints.add(new Point(graphWidth, Math.round(Person.greens/c)));
         yPoints.add(new Point(graphWidth, Math.round(Person.yellows/c)));
         rPoints.add(new Point(graphWidth, Math.round(Person.reds/c)));
         bPoints.add(new Point(graphWidth, Math.round(Person.blues/c)));
         bkPoints.add(new Point(graphWidth, Math.round(Person.blacks/c)));
 
+        //costruisco i grafici per ogni tipo (colore)
         drawCharts(g1, gPoints, Person.myGreen);
         drawCharts(g1, yPoints, Person.myYellow);
         drawCharts(g1, rPoints, Person.myRed);
@@ -54,6 +58,7 @@ public class GraphPanel extends JPanel {
 
     }
 
+    //Costruisco il grafico collegando i punti a due a due con una linea
     public void drawCharts(Graphics g1, ArrayList<Point> a, Color c){
         if(a.size()>=1) {
             float flowFactor = 0;
@@ -71,6 +76,7 @@ public class GraphPanel extends JPanel {
                 g2.setColor(c);
                 g2.draw(new Line2D.Float(p1.getTime()+flowFactor, topPanelHeight-strokeWidth - p1.getValue(), p2.getTime()+flowFactor, topPanelHeight - strokeWidth-p2.getValue()));
 
+                //Genero delle linee ad intervalli per tenere traccia dei giorni sul grafico
                 if(p2.getDay()%(vLineInterval) == 0){
                     g2.setStroke(new BasicStroke(1));
                     g2.setColor(new Color(250,250,250, 10));
