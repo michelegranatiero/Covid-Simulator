@@ -1,11 +1,12 @@
+package docFilters;
+
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.DocumentFilter;
 import java.awt.*;
 
-public class VelocityDocFilter extends DocumentFilter {
-
+public class PercentDocFilter extends DocumentFilter {
     @Override
     public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
         int len = string.length();
@@ -21,12 +22,11 @@ public class VelocityDocFilter extends DocumentFilter {
             }
         }
         if (isValidInteger){
-            if(!(fullNumber>0 && fullNumber<10000)){
+            if(!(fullNumber>0 && fullNumber<=100)){
                 isValidInteger = false;
             }
             if(isValidInteger){
                 super.insertString(fb, offset, string, attr);
-                General.velocity = fullNumber;
             }
         } else
             Toolkit.getDefaultToolkit().beep();
@@ -48,15 +48,13 @@ public class VelocityDocFilter extends DocumentFilter {
             }
         }
         if (isValidInteger){
-            if(!(fullNumber>0 && fullNumber<10000)){
+            if(!(fullNumber>0 && fullNumber<=100)){
                 isValidInteger = false;
             }
             if(isValidInteger){
                 super.replace(fb, offset, length, text, attrs);
-                General.velocity = fullNumber;
             }
         } else
             Toolkit.getDefaultToolkit().beep();
     }
-
 }

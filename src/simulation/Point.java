@@ -1,3 +1,5 @@
+package simulation;
+
 public class Point {
     private int time, value, day;
 

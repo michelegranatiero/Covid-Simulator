@@ -1,3 +1,5 @@
+package simulation;
+
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import java.awt.*;
@@ -73,7 +75,7 @@ public class MyFrame extends JFrame {
         stopButton = new MyButton("STOP");
         stopButton.setPreferredSize(new Dimension(200, 35));
         botPanel.add(stopButton, BorderLayout.CENTER);
-        //exitButton = new MyButton("EXIT");
+        //exitButton = new Simulation.MyButton("EXIT");
         //exitButton.setPreferredSize(new Dimension(200, 35));
         //botPanel.add(exitButton, BorderLayout.EAST);
 

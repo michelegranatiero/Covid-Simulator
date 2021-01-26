@@ -1,10 +1,16 @@
+package docFilters;
+
+import simulation.General;
+
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.DocumentFilter;
 import java.awt.*;
 
-public class PercentDocFilter extends DocumentFilter {
+public class PopulationDocFilter extends DocumentFilter {
+
+
     @Override
     public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
         int len = string.length();
@@ -20,10 +26,11 @@ public class PercentDocFilter extends DocumentFilter {
             }
         }
         if (isValidInteger){
-            if(!(fullNumber>0 && fullNumber<=100)){
+            if(!(fullNumber>0 && fullNumber<10000)){
                 isValidInteger = false;
             }
             if(isValidInteger){
+                General.setInitPopulation(fullNumber);
                 super.insertString(fb, offset, string, attr);
             }
         } else
@@ -36,7 +43,7 @@ public class PercentDocFilter extends DocumentFilter {
         int len = text.length();
         boolean isValidInteger = true;
         Document document = fb.getDocument ();
-        String fullText = new StringBuilder (document.getText (0, document.getLength ())).replace (offset, offset + len, text).toString ();
+        String fullText = new StringBuilder (document.getText(0, document.getLength ())).replace (offset, offset + len, text).toString ();
         int fullNumber = Integer.parseInt(fullText);
 
         for (int i = 0; i < len; i++) {
@@ -46,10 +53,11 @@ public class PercentDocFilter extends DocumentFilter {
             }
         }
         if (isValidInteger){
-            if(!(fullNumber>0 && fullNumber<=100)){
+            if(!(fullNumber>0 && fullNumber<10000)){
                 isValidInteger = false;
             }
             if(isValidInteger){
+                General.setInitPopulation(fullNumber);
                 super.replace(fb, offset, length, text, attrs);
             }
         } else

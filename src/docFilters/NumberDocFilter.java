@@ -1,9 +1,11 @@
+package docFilters;
+
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import java.awt.*;
 
-class NumberDocFilter extends DocumentFilter {
+public class NumberDocFilter extends DocumentFilter {
     @Override
     public void insertString(DocumentFilter.FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
         int len = string.length();

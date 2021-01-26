@@ -1,11 +1,14 @@
+package docFilters;
+
+import simulation.General;
+
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.DocumentFilter;
 import java.awt.*;
 
-public class PopulationDocFilter extends DocumentFilter {
-
+public class RecoveryDocFilter extends DocumentFilter {
 
     @Override
     public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
@@ -22,11 +25,11 @@ public class PopulationDocFilter extends DocumentFilter {
             }
         }
         if (isValidInteger){
-            if(!(fullNumber>0 && fullNumber<10000)){
+            if(!(fullNumber>0 && fullNumber<365)){
                 isValidInteger = false;
             }
             if(isValidInteger){
-                General.initPopulation = fullNumber;
+                General.setRecoveryTime(fullNumber);
                 super.insertString(fb, offset, string, attr);
             }
         } else
@@ -39,7 +42,7 @@ public class PopulationDocFilter extends DocumentFilter {
         int len = text.length();
         boolean isValidInteger = true;
         Document document = fb.getDocument ();
-        String fullText = new StringBuilder (document.getText(0, document.getLength ())).replace (offset, offset + len, text).toString ();
+        String fullText = new StringBuilder (document.getText (0, document.getLength ())).replace (offset, offset + len, text).toString ();
         int fullNumber = Integer.parseInt(fullText);
 
         for (int i = 0; i < len; i++) {
@@ -49,14 +52,15 @@ public class PopulationDocFilter extends DocumentFilter {
             }
         }
         if (isValidInteger){
-            if(!(fullNumber>0 && fullNumber<10000)){
+            if(!(fullNumber>0 && fullNumber<365)){
                 isValidInteger = false;
             }
             if(isValidInteger){
-                General.initPopulation = fullNumber;
+                General.setRecoveryTime(fullNumber);
                 super.replace(fb, offset, length, text, attrs);
             }
         } else
             Toolkit.getDefaultToolkit().beep();
     }
+
 }

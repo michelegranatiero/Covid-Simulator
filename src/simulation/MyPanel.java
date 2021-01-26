@@ -1,3 +1,5 @@
+package simulation;
+
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import java.awt.*;
@@ -108,7 +110,7 @@ public class MyPanel extends JPanel {
         //repaint frame precedente
         super.paintComponent(g);
 
-        //paint Person
+        //paint Simulation.Person
         for (Person p: people){
             p.paint(g);
         }

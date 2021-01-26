@@ -1,3 +1,7 @@
+package simulation;
+
+import docFilters.*;
+
 import javax.swing.*;
 import javax.swing.text.AbstractDocument;
 import java.awt.*;

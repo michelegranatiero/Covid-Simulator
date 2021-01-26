@@ -1,10 +1,14 @@
+package docFilters;
+
+import simulation.General;
+
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.DocumentFilter;
 import java.awt.*;
 
-public class RecoveryDocFilter extends DocumentFilter {
+public class VelocityDocFilter extends DocumentFilter {
 
     @Override
     public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
@@ -21,12 +25,12 @@ public class RecoveryDocFilter extends DocumentFilter {
             }
         }
         if (isValidInteger){
-            if(!(fullNumber>0 && fullNumber<365)){
+            if(!(fullNumber>0 && fullNumber<10000)){
                 isValidInteger = false;
             }
             if(isValidInteger){
-                General.recoveryTime = fullNumber;
                 super.insertString(fb, offset, string, attr);
+                General.setVelocity(fullNumber);
             }
         } else
             Toolkit.getDefaultToolkit().beep();
@@ -48,12 +52,12 @@ public class RecoveryDocFilter extends DocumentFilter {
             }
         }
         if (isValidInteger){
-            if(!(fullNumber>0 && fullNumber<365)){
+            if(!(fullNumber>0 && fullNumber<10000)){
                 isValidInteger = false;
             }
             if(isValidInteger){
-                General.recoveryTime = fullNumber;
                 super.replace(fb, offset, length, text, attrs);
+                General.setVelocity(fullNumber);
             }
         } else
             Toolkit.getDefaultToolkit().beep();

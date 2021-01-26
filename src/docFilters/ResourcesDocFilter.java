@@ -1,3 +1,7 @@
+package docFilters;
+
+import simulation.General;
+
 import javax.swing.text.*;
 import java.awt.*;
 
@@ -18,12 +22,12 @@ public class ResourcesDocFilter extends DocumentFilter {
         }
         if (isValidInteger){
 
-            if(!(fullNumber>0 && fullNumber <= General.resMax)){
+            if(!(fullNumber>0 && fullNumber <= General.getResMax())){
                 isValidInteger = false;
             }
             if(isValidInteger){
                 super.insertString(fb, offset, string, attr);
-                General.resources = fullNumber;
+                General.setResources(fullNumber);
 
             }
         } else
@@ -46,12 +50,12 @@ public class ResourcesDocFilter extends DocumentFilter {
             }
         }
         if (isValidInteger){
-            if(!(fullNumber>0 && fullNumber <= General.resMax)){
+            if(!(fullNumber>0 && fullNumber <= General.getResMax())){
                 isValidInteger = false;
             }
             if(isValidInteger){
                 super.replace(fb, offset, length, text, attrs);
-                General.resources = fullNumber;
+                General.setResources(fullNumber);
 
 
             }
