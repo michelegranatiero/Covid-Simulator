@@ -6,7 +6,7 @@ public class General {
     //Popolazione e incontri
     static int initPopulation = 500;
     static int population = initPopulation;  // numero di persone esistenti all'inizio della simulazione
-    static int speed = 0;   //velocità delle persone (0 è la velocità di base e non è nulla)
+    static int speed = 1;   //velocità delle persone (0 è la velocità di base e non è nulla)
     static int velocity = 3; //numero di incontri di un individuo (in media) in un giorno
 
 

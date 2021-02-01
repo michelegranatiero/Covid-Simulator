@@ -4,11 +4,11 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Person {
-    private final int ovalDim = 10;
-    static int opacity = 200;
+    private final int ovalDim = 13;
+    static int opacity = 255;
     static Color myGreen = new Color(0, 180, 51, opacity);
     static Color myYellow = new Color(255, 153, 0, opacity);
-    static Color myRed = new Color(140,0,0, opacity);
+    static Color myRed = new Color(190,0,0, opacity);
     static Color myBlue = new Color(50,170,255, opacity);
     static Color myBlack = new Color(0,0,0, opacity);
 
