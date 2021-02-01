@@ -13,6 +13,7 @@ public class MyPanel extends JPanel {
     //private int dayValue = 500;   //quanto vale un giorno (milliseconds)
     //private int dayCycle = 0;     //inizializzato per ciclare un giorno
     private int contIncontri = General.velocity; //dynamic velocity vd
+    private boolean flag = false;
     private boolean end1 = false;   //fine per malattia vince
     private boolean end2 = false;   //fine per collasso
     private boolean end3 = false;   //fine per malattia debellata
@@ -21,7 +22,6 @@ public class MyPanel extends JPanel {
     private final ArrayList<Person> canBeTested;    //utile per strategia
     private final ArrayList<Person> redsArray;      //utile per strategia
     Strategies strategy;
-
 
 
     public MyPanel(){
@@ -45,13 +45,16 @@ public class MyPanel extends JPanel {
         Graphics2D g = (Graphics2D)g2;
         g.setRenderingHints(new RenderingHints(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON));
 
+
         if(contIncontri>=General.velocity){     //i giorni avanzano quando la media degli incontri giornalieri è >= al parametro indicato
 
             numDays++;
             contIncontri = 0;
 
             //STRATEGIA
-            if(Person.reds >= 1){
+
+            if((Person.reds >= 1 && (Person.yellows + Person.reds > General.population*2/100)) || flag){
+                flag = true;
                 strategy = new Strategies(canBeTested, redsArray, numDays);
             }
 

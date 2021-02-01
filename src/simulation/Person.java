@@ -4,7 +4,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Person {
-    private final int ovalDim = 13;
+    private final int ovalDim = 11;
     static int opacity = 255;
     static Color myGreen = new Color(0, 180, 51, opacity);
     static Color myYellow = new Color(255, 153, 0, opacity);

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Strategies {
 
-    private static final int cadence = 7;
+    private static final int cadence = 1;
     private static int count = 0;
     private static boolean switcher = true;
 
