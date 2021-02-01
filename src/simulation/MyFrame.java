@@ -38,9 +38,6 @@ public class MyFrame extends JFrame {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
-
-
-
     }
 
     static void card2Creator(){
