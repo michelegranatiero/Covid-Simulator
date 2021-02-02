@@ -103,6 +103,7 @@ public class MyPanel extends JPanel {
             contIncontri+= p.getMeetings().size();
         }
         contIncontri = Math.round((float)contIncontri/people.size()); //update dynamic velocity vd
+
         General.r0 = contIncontri * General.recoveryTime * General.infectivity; //update r0 factor
 
         //rimuovere deceduti da array People
