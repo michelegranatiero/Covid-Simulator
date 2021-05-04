@@ -26,7 +26,7 @@ public class General {
     static int resMax = Math.min(10*initPopulation*swabCost, initPopulation*recoveryTime) - 1;   //quantità risorse inizialmente disponibili
     static int resources = resMax;   //quantità risorse inizialmente disponibili
     static double r0 = 0; //fattore r0 iniziale
-    static int strategy = 2;
+    static int strategy = 1;
 
 
     //Metodo per aggiornare le risorse (utile al menù iniziale)
