@@ -147,11 +147,12 @@ public class MenuPanel extends JPanel {
         }
     }
 
-    //genero i JTextField da un array
+    //genero i JTextField da un array e la JComboBox
     public void genTextFields(ArrayList<JTextField> a, JPanel panel, int iterations) {
         for(int i = 0; i<iterations; i++ ){
             if(i == 7){     //genero l'unico combo box del menù per la strategia
                 cb = new JComboBox<>(Strategies.sNames);
+                cb.setSelectedIndex(1);
                 cb.setBackground(Color.white);
                 cb.setPreferredSize(new Dimension(50,5));
                 cb.setFocusable(false);
