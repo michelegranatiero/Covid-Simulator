@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 
 public class MyFrame extends JFrame {
 
+    ImageIcon logo = new ImageIcon(".//res//covid.png");
+
     static int refreshRate = 20;   //in millisecondi (usare multipli di 5)
     Timer timer;
     static Color backCol1 = new Color(100-10, 120-10, 160-10);
@@ -25,6 +27,8 @@ public class MyFrame extends JFrame {
     public MyFrame(){
         super("Simulatore Covid");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        setIconImage(logo.getImage());
 
         //container
         cardLayout = new CardLayout();
