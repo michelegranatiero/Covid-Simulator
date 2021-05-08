@@ -8,14 +8,18 @@ import java.awt.event.ActionListener;
 public class MyFrame extends JFrame {
 
     static int refreshRate = 20;   //in millisecondi (usare multipli di 5)
-    static Timer timer;
+    Timer timer;
     static Color backCol1 = new Color(100-10, 120-10, 160-10);
     static Color backCol2 = new Color(20, 91, 156);
-    static CardLayout cardLayout;
-    static JPanel cardsPanel;
-    static MyButton stopButton;
-    static JPanel card2;
-    static ActionListener actLis;
+    CardLayout cardLayout;
+    JPanel cardsPanel;
+    MyButton pauseButton;
+    MyButton exitButton;
+    JPanel card2;
+    GraphPanel graph;
+    ActionListener actLis;
+    int numDays = 0;
+    int population = General.initPopulation;  // numero di persone esistenti all'inizio della simulazione
 
 
     public MyFrame(){
@@ -28,7 +32,7 @@ public class MyFrame extends JFrame {
         setContentPane(cardsPanel);
 
         //Menù - Card1 Panel
-        MenuPanel card1 = new MenuPanel();
+        MenuPanel card1 = new MenuPanel(this);
         cardsPanel.add(card1, "1");
         this.setMinimumSize(new Dimension(600, 400));
 
@@ -40,7 +44,7 @@ public class MyFrame extends JFrame {
 
     }
 
-    static void card2Creator(){
+    public void card2Creator(){
 
         //Simulation - Card2 Panel
         card2 = new JPanel(new BorderLayout());
@@ -55,42 +59,42 @@ public class MyFrame extends JFrame {
         card2.add(topContainer, BorderLayout.NORTH);
 
         //Panels in top Container
-        GraphPanel graph = new GraphPanel();
+        graph = new GraphPanel(this);
         topContainer.add(graph);
 
-        StatsPanel stats = new StatsPanel();
+        StatsPanel stats = new StatsPanel(this);
         topContainer.add(stats);
 
         //simulationPanel in Card2
-        MyPanel simulationPanel = new MyPanel();
+        MyPanel simulationPanel = new MyPanel(this, numDays);
         card2.add(simulationPanel, BorderLayout.CENTER);
 
         //botPanel in Card2
         JPanel botPanel = new JPanel(new BorderLayout());
         card2.add(botPanel, BorderLayout.SOUTH);
         botPanel.setBackground(backCol2);
-        stopButton = new MyButton("STOP");
-        stopButton.setPreferredSize(new Dimension(200, 35));
-        botPanel.add(stopButton, BorderLayout.CENTER);
-        //exitButton = new Simulation.MyButton("EXIT");
-        //exitButton.setPreferredSize(new Dimension(200, 35));
-        //botPanel.add(exitButton, BorderLayout.EAST);
+        pauseButton = new MyButton("PAUSE");
+        pauseButton.setPreferredSize(new Dimension(200, 35));
+        botPanel.add(pauseButton, BorderLayout.CENTER);
+        exitButton = new MyButton("EXIT");
+        exitButton.setPreferredSize(new Dimension(200, 35));
+        botPanel.add(exitButton, BorderLayout.EAST);///////////////////////////////
 
         //ACTION LISTENERS
-        stopButton.addActionListener(e -> stopButtonClick());
-        //exitButton.addActionListener(e -> exitButtonClick());
+        pauseButton.addActionListener(e -> pauseButtonClick());
+        exitButton.addActionListener(e -> exitButtonClick());
 
         //Timer
         actLis = e -> updateInvoker(simulationPanel, graph, stats);
         timer = new Timer(refreshRate, actLis);
 
 
-        JFrame f1 = (JFrame) SwingUtilities.getWindowAncestor(MyFrame.cardsPanel);
+        JFrame f1 = (JFrame) SwingUtilities.getWindowAncestor(cardsPanel);
         f1.pack();
         f1.setLocationRelativeTo(null);
         f1.setResizable(false);
-        MyFrame.cardLayout.show(MyFrame.cardsPanel, "2");
-        MyFrame.timer.start();
+        cardLayout.show(cardsPanel, "2");
+        this.timer.start();
     }
 
 
@@ -103,25 +107,48 @@ public class MyFrame extends JFrame {
     }
 
     //azione del pulsante STOP/RESUME
-    static boolean isPlaying = true;
-    public static void stopButtonClick(){
+    private boolean isPlaying = true;
+    public void pauseButtonClick(){
         if(isPlaying){
             timer.stop();
             isPlaying = false;
-            stopButton.setText("RESUME");
+            pauseButton.setText("RESUME");
         }else{
             timer.start();
             isPlaying = true;
-            stopButton.setText("STOP");
+            pauseButton.setText("PAUSE");
         }
     }
 
     //disabilitare il pulsante STOP alla fine della simulazione
-    static void disabler(String s){
-        stopButton.setEnabled(false);
-        stopButton.setText(s);
+    public void disabler(String s){
+        pauseButton.setEnabled(false);
+        pauseButton.setText(s);
     }
 
+    public void exitButtonClick(){
+        dispose();
+        Person.resetContatori();
+        General.resources = General.resMax;
+        MyFrame frame = new MyFrame();
+        frame.setVisible(true);
+    }
+
+    public void plusOneNumDays(){
+        numDays++;
+    }
+
+    public int getNumDays(){
+        return numDays;
+    }
+
+    public int getPopulation() {
+        return population;
+    }
+
+    public void setPopulation(int population) {
+        this.population = population;
+    }
 
 
 

@@ -12,13 +12,13 @@ import java.util.ArrayList;
 public class MenuPanel extends JPanel {
 
     private final GridBagConstraints c;
-    static ArrayList<JLabel> labelList;
-    static ArrayList<JTextField> textList;
+    ArrayList<JLabel> labelList;
+    ArrayList<JTextField> textList;
     private JComboBox<String> cb;
-    static JLabel resMax;
+    JLabel resMax;
 
 
-    public MenuPanel(){
+    public MenuPanel(MyFrame frame){
         super(new GridBagLayout());
         c = new GridBagConstraints();
         setBorder(BorderFactory.createEmptyBorder(10,50,20,50));
@@ -103,16 +103,16 @@ public class MenuPanel extends JPanel {
         add(resMax, c);
 
         //ACTION LISTENERS PULSANTI
-        buttonStart.addActionListener(e->buttonStartClick(textList));   //START BUTTON
+        buttonStart.addActionListener(e->buttonStartClick(textList, frame));   //START BUTTON
         buttonClear.addActionListener(e -> buttonClearClick(textList)); //CLEAR BUTTON
 
     }
 
-    public void buttonStartClick(ArrayList<JTextField> texts){
+    public void buttonStartClick(ArrayList<JTextField> texts, MyFrame frame){
 
         try{    //imposto i parametri
             General.initPopulation = Integer.parseInt(texts.get(0).getText());
-            General.population = General.initPopulation;    //UPDATE
+            frame.setPopulation(General.initPopulation); //UPDATE
             General.velocity = Integer.parseInt(texts.get(1).getText());
             General.infectivity = Double.parseDouble(texts.get(2).getText())/100;
             General.symptomaticity = Double.parseDouble(texts.get(3).getText())/100;
@@ -121,7 +121,7 @@ public class MenuPanel extends JPanel {
             General.resources = Integer.parseInt(texts.get(6).getText());
             General.strategy = cb.getSelectedIndex();
             //BOTTOM
-            MyFrame.card2Creator(); //Genero la simulazione
+            frame.card2Creator(); //Genero la simulazione
         }catch(Exception e){
             System.out.println("Something went wrong");
         }
@@ -179,7 +179,7 @@ public class MenuPanel extends JPanel {
 
 
     //valori iniziali JtextField e filtri per il testo
-    static void theFilter(int i, JTextField t){
+    void theFilter(int i, JTextField t){
         switch (i){
             case 0: //Popolazione
                 t.setText(General.initPopulation +"");
@@ -189,7 +189,7 @@ public class MenuPanel extends JPanel {
                     @Override
                     public void focusLost(FocusEvent e) {
                         General.updateRes();
-                        MenuPanel.resMax.setText(General.resMax+" max");
+                        resMax.setText(General.resMax+" max");
                         ((AbstractDocument) textList.get(6).getDocument()).setDocumentFilter(new NumberDocFilter());
                         textList.get(6).setText(General.resources+"");
                         ((AbstractDocument)textList.get(6).getDocument()).setDocumentFilter(new ResourcesDocFilter());
@@ -198,7 +198,7 @@ public class MenuPanel extends JPanel {
                     @Override
                     public void focusGained(FocusEvent e) {
                         General.updateRes();
-                        MenuPanel.resMax.setText(General.resMax+" max");
+                        resMax.setText(General.resMax+" max");
                         ((AbstractDocument) textList.get(6).getDocument()).setDocumentFilter(new NumberDocFilter());
                         textList.get(6).setText(General.resources+"");
                         ((AbstractDocument)textList.get(6).getDocument()).setDocumentFilter(new ResourcesDocFilter());
@@ -229,7 +229,7 @@ public class MenuPanel extends JPanel {
                     @Override
                     public void focusLost(FocusEvent e) {
                         General.updateRes();
-                        MenuPanel.resMax.setText(General.resMax+" max");
+                        resMax.setText(General.resMax+" max");
                         ((AbstractDocument) textList.get(6).getDocument()).setDocumentFilter(new NumberDocFilter());
                         textList.get(6).setText(General.resources+"");
                         ((AbstractDocument)textList.get(6).getDocument()).setDocumentFilter(new ResourcesDocFilter());
@@ -238,7 +238,7 @@ public class MenuPanel extends JPanel {
                     @Override
                     public void focusGained(FocusEvent e) {
                         General.updateRes();
-                        MenuPanel.resMax.setText(General.resMax+" max");
+                        resMax.setText(General.resMax+" max");
                         ((AbstractDocument) textList.get(6).getDocument()).setDocumentFilter(new NumberDocFilter());
                         textList.get(6).setText(General.resources+"");
                         ((AbstractDocument)textList.get(6).getDocument()).setDocumentFilter(new ResourcesDocFilter());

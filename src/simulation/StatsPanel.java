@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class StatsPanel extends JPanel {
+    MyFrame frame;
 
     private final JLabel g = new JLabel();
     private final JLabel y = new JLabel();
@@ -13,9 +14,10 @@ public class StatsPanel extends JPanel {
 
     private final JLabel cl = new JLabel();
 
-    public StatsPanel(){
+    public StatsPanel(MyFrame myFrame){
         this.setLayout((new BorderLayout()));
         this.setBackground(MyFrame.backCol1);
+        frame = myFrame;
 
         Color[] colors = new Color[]{Person.myGreen, Person.myYellow, Person.myRed, Person.myBlue, Person.myBlack};
         JLabel[] labels = new JLabel[]{g, y, r, bl, bk};
@@ -52,7 +54,7 @@ public class StatsPanel extends JPanel {
 
     public void updateLabels(){
         //CENTERPANEL
-        cl.setText("Giorno: "+MyPanel.numDays+ "          Risorse: "+ General.resources);
+        cl.setText("Giorno: "+frame.getNumDays()+ "          Risorse: "+ General.resources);
 
         //LEFTPANEL
         g.setText("Sani: " + Person.greens);

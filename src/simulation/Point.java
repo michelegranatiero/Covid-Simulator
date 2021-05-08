@@ -3,10 +3,10 @@ package simulation;
 public class Point {
     private int time, value, day;
 
-    public Point(int t, int v){
+    public Point(int t, int v, int numDays){
         time = t;
         value = v;
-        day = MyPanel.numDays;
+        day = numDays;
 
     }
 

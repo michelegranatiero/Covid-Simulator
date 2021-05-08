@@ -225,9 +225,10 @@ public class Person {
         }
     }
 
-    public void setYellowFromGreen(){
+    public void setFirstYellow(){ //start virus
         if(this.type.equals("green")){
             this.incTimer = true;
+            this.checkInfectivity();
         }
     }
 
@@ -237,9 +238,13 @@ public class Person {
     }
 
 
-
-
-
+    static void resetContatori(){
+        greens = 0;
+        yellows = 0;
+        reds = 0;
+        blues = 0;
+        blacks = 0;
+    }
 
 
 

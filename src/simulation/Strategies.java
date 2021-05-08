@@ -4,15 +4,21 @@ import java.util.ArrayList;
 
 public class Strategies {
 
-    private static final int cadence = 1;
-    private static int count = 0;
-    private static boolean switcher = true;
+    private final int cadence = 1;
+    private int count = 0;
+    private boolean switcher = true;
+    MyFrame frame;
 
     private ArrayList<Person> canBeTested; //only greens and yellows
     private ArrayList<Person> redsArray;
     static String[] sNames = {"Immunità di Gregge", "Test a Campione", "Traccia Sintomatici", "Metà in Lockdown"};
 
-    public Strategies( ArrayList<Person> cbt, ArrayList<Person> reds,int days){
+    public Strategies(MyFrame myframe){
+        frame = myframe;
+
+    }
+
+    public void startStrategy(ArrayList<Person> cbt, ArrayList<Person> reds, int days){
         if(count == 0 || (days - count) >= cadence){
             canBeTested = cbt;
             redsArray = reds;
@@ -37,7 +43,7 @@ public class Strategies {
     }
 
     public void testACampione(){
-        int sample = General.population/8; //dimensione del campione
+        int sample = frame.getPopulation()/8; //dimensione del campione
         ArrayList<Person> sampleArray = new ArrayList<>();
 
         while(sampleArray.size() < sample && sampleArray.size() < canBeTested.size()){
@@ -70,12 +76,12 @@ public class Strategies {
     }
 
     public void stopHalfPop(){
-        if(canBeTested.size()<=General.population/2){
+        if(canBeTested.size()<=frame.getPopulation()/2){
             for(Person p: canBeTested){
                 p.setMovement(false);
             }
         }else{
-            for(int i = 0; i < General.population/2; i++){
+            for(int i = 0; i < frame.getPopulation()/2; i++){
                 canBeTested.get(i).setMovement(false);
             }
         }

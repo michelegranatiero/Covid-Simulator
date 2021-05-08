@@ -5,7 +5,7 @@ public class General {
 
     //Popolazione e incontri
     static int initPopulation = 500;
-    static int population = initPopulation;  // numero di persone esistenti all'inizio della simulazione
+
     static int speed = 0;   //velocità delle persone (0 è la velocità di base e non è nulla)
     static int velocity = 3; //numero di incontri di un individuo (in media) in un giorno
 
@@ -23,7 +23,7 @@ public class General {
     //Aspetti economici e strategia
     static int swabCost = 1;    //costo tampone
     static int careCost = 3*swabCost;    //costo giornaliero cure mediche per i malati (rossi)
-    static int resMax = Math.min(10*initPopulation*swabCost, initPopulation*recoveryTime) - 1;   //quantità risorse inizialmente disponibili
+    static int resMax = Math.min(10*initPopulation*swabCost, initPopulation*recoveryTime) - 1;   //quantità max di risorse inizialmente disponibili
     static int resources = resMax;   //quantità risorse inizialmente disponibili
     static double r0 = 0; //fattore r0 iniziale
     static int strategy = 1;

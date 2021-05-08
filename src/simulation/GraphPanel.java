@@ -7,11 +7,11 @@ import java.util.ArrayList;
 
 public class GraphPanel extends JPanel {
 
-    static ArrayList<Point> gPoints = new ArrayList<>();
-    static ArrayList<Point> yPoints = new ArrayList<>();
-    static ArrayList<Point> rPoints = new ArrayList<>();
-    static ArrayList<Point> bPoints = new ArrayList<>();
-    static ArrayList<Point> bkPoints = new ArrayList<>();
+    ArrayList<Point> gPoints = new ArrayList<>();
+    ArrayList<Point> yPoints = new ArrayList<>();
+    ArrayList<Point> rPoints = new ArrayList<>();
+    ArrayList<Point> bPoints = new ArrayList<>();
+    ArrayList<Point> bkPoints = new ArrayList<>();
 
 
     static int graphWidth;
@@ -25,10 +25,11 @@ public class GraphPanel extends JPanel {
     private final BasicStroke myStroke= new BasicStroke(strokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 
     private final float c = General.initPopulation / (float)(topPanelHeight -10); //costante per mettere in scala il grafico verticalmente
+    MyFrame frame;
+    boolean resetGraphicsflag = false;
 
-
-    public GraphPanel(){
-
+    public GraphPanel(MyFrame myframe){
+        frame = myframe;
         this.setBackground(MyFrame.backCol1);
         this.setPreferredSize(new Dimension(panelWidth, topPanelHeight));
 
@@ -37,19 +38,20 @@ public class GraphPanel extends JPanel {
 
     @Override
     public void paintComponent(Graphics g2){
+
         Graphics2D g1 = (Graphics2D)g2;
         g1.setRenderingHints(new RenderingHints(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON));
 
         super.paintComponent(g1);
 
-        graphWidth = MyPanel.numDays * panelWidth/daysInGraph - panelWidth/daysInGraph;
+        graphWidth = frame.getNumDays() * panelWidth/daysInGraph - panelWidth/daysInGraph;
 
         //liste che contengono tuti i punti da collegare
-        gPoints.add(new Point(graphWidth, Math.round(Person.greens/c)));
-        yPoints.add(new Point(graphWidth, Math.round(Person.yellows/c)));
-        rPoints.add(new Point(graphWidth, Math.round(Person.reds/c)));
-        bPoints.add(new Point(graphWidth, Math.round(Person.blues/c)));
-        bkPoints.add(new Point(graphWidth, Math.round(Person.blacks/c)));
+        gPoints.add(new Point(graphWidth, Math.round(Person.greens/c), frame.getNumDays()));
+        yPoints.add(new Point(graphWidth, Math.round(Person.yellows/c), frame.getNumDays()));
+        rPoints.add(new Point(graphWidth, Math.round(Person.reds/c), frame.getNumDays()));
+        bPoints.add(new Point(graphWidth, Math.round(Person.blues/c), frame.getNumDays()));
+        bkPoints.add(new Point(graphWidth, Math.round(Person.blacks/c), frame.getNumDays()));
 
         //costruisco i grafici per ogni tipo (colore)
         drawCharts(g1, gPoints, Person.myGreen);
@@ -65,8 +67,8 @@ public class GraphPanel extends JPanel {
         if(a.size()>=1) {
             float flowFactor = 0;
             for (int i = 1; i < a.size(); i++) {
-                if(MyPanel.numDays >= daysInGraph){
-                    flowFactor = (daysInGraph-MyPanel.numDays)*((float)panelWidth/daysInGraph);//fattore per fare scorrere il grafico
+                if(frame.getNumDays() >= daysInGraph){
+                    flowFactor = (daysInGraph-frame.getNumDays())*((float)panelWidth/daysInGraph);//fattore per fare scorrere il grafico
                     if(a.get(i).getTime()+flowFactor < 0){
                         continue;
                     }
@@ -90,12 +92,6 @@ public class GraphPanel extends JPanel {
             }
         }
     }
-
-
-
-
-
-
 
 
 

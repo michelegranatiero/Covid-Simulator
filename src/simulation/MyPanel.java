@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class MyPanel extends JPanel {
 
+    MyFrame frame;
     static int frameWidth = 1200, frameHeight = 500;
-    static int numDays = 0;         //conteggio
     //tempo reale (milliseconds)
     //private int dayValue = 500;   //quanto vale un giorno (milliseconds)
     //private int dayCycle = 0;     //inizializzato per ciclare un giorno
@@ -24,7 +24,8 @@ public class MyPanel extends JPanel {
     Strategies strategy;
 
 
-    public MyPanel(){
+    public MyPanel(MyFrame myframe, int numDays){
+        frame = myframe;
 
         this.setPreferredSize(new Dimension(frameWidth, frameHeight));
         this.setBackground(MyFrame.backCol2);
@@ -34,9 +35,11 @@ public class MyPanel extends JPanel {
         for(int i=0; i<General.initPopulation; i++){
             people.add(new Person());
         }
-        people.get(0).setYellowFromGreen(); //inserisco il virus nella popolazione (paziente 0)
+        Person zero = people.get(0);
         canBeTested = new ArrayList<>(people);
         redsArray = new ArrayList<>();
+        zero.setFirstYellow(); //inserisco il virus nella popolazione (paziente 0)
+        strategy = new Strategies(frame);
 
     }
 
@@ -48,14 +51,14 @@ public class MyPanel extends JPanel {
 
         if(contIncontri>=General.velocity){     //i giorni avanzano quando la media degli incontri giornalieri è >= al parametro indicato
 
-            numDays++;
+            frame.plusOneNumDays();
             contIncontri = 0;
 
             //STRATEGIA
 
-            if((Person.reds >= 1 && (Person.yellows + Person.reds > General.population*2/100)) || flag){
+            if((Person.reds >= 1 && (Person.yellows + Person.reds > frame.getPopulation()*2/100)) || flag){
                 flag = true;
-                strategy = new Strategies(canBeTested, redsArray, numDays);
+                strategy.startStrategy(canBeTested, redsArray, frame.getNumDays());
             }
 
 
@@ -85,7 +88,7 @@ public class MyPanel extends JPanel {
                     case "black" -> {
                         redsArray.remove(p);
                         deaths.add(p);
-                        General.population--;
+                        frame.population--; //!fare una funzione!
                     }
                 }
             }
@@ -125,26 +128,26 @@ public class MyPanel extends JPanel {
         //STOP CONDITIONS
         if(Person.blacks>=General.initPopulation){
             if(end1){
-                System.out.println("LA MALATTIA HA VINTO!");
-                MyFrame.timer.stop();
-                MyFrame.disabler("LA MALATTIA HA VINTO!");
+                //System.out.println("LA MALATTIA HA VINTO!");
+                frame.timer.stop();
+                frame.disabler("LA MALATTIA HA VINTO!");
             }else{end1=true;}
         }
         if(General.resources <= 0){
             if(end2){
-                System.out.println("COLLASSO! RISORSE TERMINATE!");
+                //System.out.println("COLLASSO! RISORSE TERMINATE!");
                 General.resources = 0;
-                MyFrame.timer.stop();
-                MyFrame.disabler("COLLASSO! RISORSE TERMINATE!");
+                frame.timer.stop();
+                frame.disabler("COLLASSO! RISORSE TERMINATE!");
 
             }else{end2 = true;}
 
         }
         if((Person.blues>0 || Person.greens>0) && Person.yellows==0 && Person.reds==0){
             if(end3){
-                System.out.println("MALATTIA DEBELLATA!");
-                MyFrame.timer.stop();
-                MyFrame.disabler("MALATTIA DEBELLATA!");
+                //System.out.println("MALATTIA DEBELLATA!");
+                frame.timer.stop();
+                frame.disabler("MALATTIA DEBELLATA!");
             }else{
                 boolean end = true;
                 for(Person p: people){
