@@ -1,6 +1,7 @@
 # Covid-Simulator
 
-My first java project for a universiy course to simulate the covid virus spreadness among people.
+This is my first java project for a universiy course to simulate the covid virus spreadness among people.
+
 You can specify different parameters before starting the simulation (with some bounds) and choose different strategies to "restrict" the virus effects
 
 The gui is created with Java Swing
