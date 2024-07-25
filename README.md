@@ -1,6 +1,8 @@
 # Covid-Simulator
 
-This is my first java project for a universiy course to simulate the covid virus spreading among people.
+### Java Project - Sapienza University of Rome
+
+This is my first java project for a university course to simulate the covid virus spreading among people.
 
 The simulator is built for monitoring the daily propagation of a virus among the population via a GUI in real time.
 
